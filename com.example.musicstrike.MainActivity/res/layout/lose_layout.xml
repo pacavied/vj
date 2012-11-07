@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.51" >
+
+        <ImageButton
+            android:id="@+id/goToMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="44dp"
+            android:layout_marginTop="430dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/menu_button" />
+
+        <ImageButton
+            android:id="@+id/tryAgainButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="130dp"
+            android:layout_toRightOf="@+id/goToMenuButton"
+            android:background="@android:color/transparent"
+            android:src="@drawable/tryagain_button" />
+
+    </RelativeLayout>
+
+</LinearLayout>
