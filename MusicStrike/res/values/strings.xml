@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">MusicStrike</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MusicStrike</string>
+    <string name="title_activity_game_classic">gameClassicActivity</string>
+
+</resources>
