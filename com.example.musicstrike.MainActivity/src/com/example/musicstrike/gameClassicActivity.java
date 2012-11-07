@@ -35,6 +35,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -44,6 +45,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,6 +64,9 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private boolean monitorBool, readyToStart = false, dalomismo = true;	
 	private int currentScore = 0;
 	private int highscore = 0;
+	private int objectID = -1;
+	private ImageView objectView = null;
+	private Behavior behavior;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,8 +90,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			e1.printStackTrace();
 		}
         
-        player = MediaPlayer.create(this, R.raw.compastempo120b4seg);
-       
+        player = MediaPlayer.create(this, R.raw.compastempo120b4seg);       
         
         player.setVolume(100, 100);
         player.start();
@@ -143,19 +147,49 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			public void run() {
 
 				int rnd = generateRandom();
+				
+				rnd = 0;
+				
+				behavior = new Behavior(rnd);
+				
 				//tv1.setText("algo"+rnd);
 				// Caso en que toca TAP
 				//rnd=0; tap = false;
 				
+				RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
+				rl.setBackgroundResource(behavior.backgroundImage);
+				
+				
+				if(behavior.haveObject){
+					
+					if(objectView != null)
+						rl.removeView(objectView);
+					
+					objectView = new ImageView(gameClassicActivity.this);
+					objectView.setId(9857);
+					objectID = objectView.getId();
+					
+					objectView.setImageResource(behavior.objectInitialSprite);
+					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+					        RelativeLayout.LayoutParams.WRAP_CONTENT,
+					        RelativeLayout.LayoutParams.WRAP_CONTENT);
+					lp.leftMargin = 100;
+					lp.topMargin = 100;
+					
+					rl.addView(objectView, lp);
+					
+				}
+				
 	            
 	            
-				if (rnd == 0) {
+				if (behavior.behaviorType == 0) {
 					if (tap == true) {
 						tap = false;
 						Log.v("NoTAP", "Ntaped: X");
 					} else {
 						tap = true;
 						TextView tv = (TextView) findViewById(R.id.textView1);
+						
 						tv.setTextColor(Color.RED);
 						tv.setTextSize(80);
 						tv.setGravity(Gravity.CENTER);
@@ -379,6 +413,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Just on Time!");
+			if(behavior.haveObject && objectID != -1){
+				ImageView iv = (ImageView) findViewById(objectID);
+				iv.setImageResource(behavior.objectFinalSprite);
+			}
 			player2.start();
 			refreshHighScore();
 			tap = false;

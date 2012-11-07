@@ -12,21 +12,25 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/theme1" />
 
-   <ImageView
-       android:id="@+id/imageView1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:src="@drawable/front2" />
+    
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/front2" />
 
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="38dp"
-        android:layout_marginTop="87dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/play_buttonvgiant" />
-
+        android:scaleType="fitXY"
+        android:src="@drawable/play_button" />
+    
 </RelativeLayout>
