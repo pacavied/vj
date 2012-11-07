@@ -146,11 +146,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			@SuppressLint("ParserError")
 			public void run() {
 
-				int rnd = generateRandom();
 				
-				rnd = 0;
 				
-				behavior = new Behavior(rnd);
+				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
+				
+				
+				behavior = new Behavior();
 				
 				//tv1.setText("algo"+rnd);
 				// Caso en que toca TAP
@@ -206,7 +207,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				}
 
 				// Caso SCROLL
-				else if (rnd == 1){
+				else if (behavior.behaviorType == 1){
 					
 						scroll = true;
 						TextView tv = (TextView) findViewById(R.id.textView1);
@@ -222,7 +223,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						
 				}
 				// Caso SHAKE
-				else if (rnd == 2){
+				else if (behavior.behaviorType == 2){
 					
 						shake = true;
 						TextView tv = (TextView) findViewById(R.id.textView1);
@@ -238,7 +239,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				}
 				
 				// Caso MOVE LEFT
-				else if (rnd == 3){
+				else if (behavior.behaviorType == 3){
 					
 						moveLeft = true;
 						TextView tv = (TextView) findViewById(R.id.textView1);
@@ -254,7 +255,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				}
 				
 				// Caso MOVE RIGHT
-				else if (rnd == 4){
+				else if (behavior.behaviorType == 4){
 					
 						moveRight = true;
 						TextView tv = (TextView) findViewById(R.id.textView1);
@@ -286,7 +287,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         player.start();
     }
     
-    public int generateRandom()
+   /* public int generateRandom()
 	{
 		double rnd = Math.random();
 		
@@ -318,7 +319,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		
 		return (int)rnd;
 	}
-    
+    */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -406,6 +407,20 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void updateSpritesAndBackgrounds(){
+		
+
+		if(behavior.haveObject && objectID != -1){
+			ImageView iv = (ImageView) findViewById(objectID);
+			iv.setImageResource(behavior.objectFinalSprite);
+		}
+		if(behavior.haveFinalBackground && objectID != -1){
+			RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
+			rl.setBackgroundResource(behavior.finalBackground);
+		}
+		
+	}
 
 	public boolean onSingleTapUp(MotionEvent e) 
 	{
@@ -413,10 +428,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Just on Time!");
-			if(behavior.haveObject && objectID != -1){
-				ImageView iv = (ImageView) findViewById(objectID);
-				iv.setImageResource(behavior.objectFinalSprite);
-			}
+			updateSpritesAndBackgrounds();
 			player2.start();
 			refreshHighScore();
 			tap = false;
@@ -452,6 +464,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				player2.start();
 				refreshHighScore();
 				//shake = false;
+				Log.e("shake","shake");
 				
 			}
 			
@@ -463,6 +476,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			//Move Right
 			if (pitch < -3 && moveRight)
 			{
+				Log.e("Right","Right");
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Moved right!");
 				//waitAndClose(600, layout, tv);
@@ -482,10 +496,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			{
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Moved left!");
+				updateSpritesAndBackgrounds();
 				//waitAndClose(600, layout, tv);
 				if(!monitorBool)
 				player2.start();
 				refreshHighScore();
+				Log.e("left","left");
 				//moveLeft = false;
 			}	
 
@@ -607,31 +623,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	    tv.startAnimation(set);
 	}
 
-	/*private void setTimer()
-	{
-		final long mStartTime = System.currentTimeMillis();
-		final TextView timer = (TextView) findViewById(R.id.timer);
-		
-		final Handler handler = new Handler();
-		handler.post(new Runnable() {
-			   public void run() {
-			       final long start = mStartTime;
-			       long millis = System.currentTimeMillis() - start;
-			       int seconds = (int) (millis / 1000);
-			       int minutes = seconds / 60;
-			       seconds     = seconds % 60;
-
-			       if (seconds < 10) {
-			           timer.setText("" + minutes + ":0" + seconds);
-			       } else {
-			           timer.setText("" + minutes + ":" + seconds);            
-			       }
-			       
-			       handler.postDelayed(this, 500);
-			     
-			   }
-			});
-	}*/
 	
 	private String getHighScore() throws IOException
 	{
