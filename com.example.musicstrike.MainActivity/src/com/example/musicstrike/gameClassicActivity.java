@@ -35,6 +35,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -56,6 +57,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private MediaPlayer player2;
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = true;
+	private boolean haveToDestroyAnObject = false;
 	private GestureDetector gestureScanner;
 	private SensorManager mSensorManager;
 	private float mAccel; // acceleration apart from gravity
@@ -160,17 +162,22 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
 				rl.setBackgroundResource(behavior.backgroundImage);
 				
+				ImageView vh = (ImageView) findViewById(R.id.victoryHands);
+				vh.setVisibility(View.INVISIBLE);
+				
+				if(objectView != null)
+					rl.removeView(objectView);
 				
 				if(behavior.haveObject){
 					
-					if(objectView != null)
-						rl.removeView(objectView);
+					
 					
 					objectView = new ImageView(gameClassicActivity.this);
 					objectView.setId(9857);
 					objectID = objectView.getId();
 					
 					objectView.setImageResource(behavior.objectInitialSprite);
+					haveToDestroyAnObject = true;
 					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 					        RelativeLayout.LayoutParams.WRAP_CONTENT,
 					        RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -410,15 +417,20 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	
 	public void updateSpritesAndBackgrounds(){
 		
+		ImageView vh = (ImageView) findViewById(R.id.victoryHands);
+		vh.setVisibility(View.VISIBLE);
 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
 			iv.setImageResource(behavior.objectFinalSprite);
+			haveToDestroyAnObject = true;
 		}
-		if(behavior.haveFinalBackground && objectID != -1){
+		if(behavior.haveFinalBackground){
 			RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
 			rl.setBackgroundResource(behavior.finalBackground);
 		}
+		
+		
 		
 	}
 
