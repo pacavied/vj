@@ -54,7 +54,8 @@ import android.widget.TextView;
 
 public class gameClassicActivity extends Activity implements OnGestureListener, OnPreparedListener {
 
-	private MediaPlayer player;
+	private MediaPlayer playerBase1;
+	private MediaPlayer playerBase2;
 	private MediaPlayer player2;
 	private MediaPlayer player3;
 	private int indexMediaPlayer = 0;
@@ -96,10 +97,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			e1.printStackTrace();
 		}
         
-        player = MediaPlayer.create(this, R.raw.compastempo120b4seg);       
-        
-        player.setVolume(100, 100);
-        player.start();
+        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b4seg);       
+        //playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b4seg); 
+        playerBase1.setVolume(100, 100);
+        playerBase1.start();
         
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
@@ -148,7 +149,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         */
 	    
 	    
-	    player.setOnPreparedListener(this);
+	    playerBase1.setOnPreparedListener(this);
 		// "While" principal
 		final Handler handler = new Handler();
 		handler.post(new Runnable() {
@@ -235,7 +236,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						animateTextView(tv); 
 						
 						if(!monitorBool)
-						player.seekTo(0);
+						playerBase1.seekTo(0);
 						
 						Log.v("TAP", "Tap Now");
 						
@@ -253,7 +254,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setText("Scroll now!");				
 						animateTextView(tv); 
 						if(!monitorBool)
-						player.seekTo(0);
+						playerBase1.seekTo(0);
 						Log.v("SCROLL", "Scroll Now");
 							
 						
@@ -269,7 +270,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setText("Shake now!");				
 						animateTextView(tv); 
 						if(!monitorBool)
-						player.seekTo(0);
+						playerBase1.seekTo(0);
 						Log.v("SHAKE", "Shake Now");	
 						
 				}
@@ -285,7 +286,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setText("Left now!");				
 						animateTextView(tv); 
 						if(!monitorBool)
-						player.seekTo(0);
+						playerBase1.seekTo(0);
 						Log.v("LEFT", "Left Now");	
 						
 				}
@@ -301,7 +302,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setText("Right now!");				
 						animateTextView(tv); 
 						if(!monitorBool)
-						player.seekTo(0);
+						playerBase1.seekTo(0);
 						Log.v("RIGHT", "Right Now");
 							
 						
@@ -320,7 +321,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
     
     
     public void onPrepared(MediaPlayer player1) {
-        player.start();
+        player1.start();
     }
     
    /* public int generateRandom()
@@ -360,8 +361,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
         		monitorBool = true;
-                player.reset();
-                player.release();
+                playerBase1.reset();
+                playerBase1.release();
                 player2.reset();
                 player2.release();
                 dalomismo = false;
@@ -591,7 +592,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		tv.setText("Wrong!");
 		monitorBool = true;
         //player.reset();
-        player.release();
+        playerBase1.release();
         //player2.reset();
         player2.release();
         player3.release();

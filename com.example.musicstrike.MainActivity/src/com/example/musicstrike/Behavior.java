@@ -14,8 +14,9 @@ public class Behavior {
 	
 	public boolean haveFinalBackground = false;
 	public boolean haveObject = false;
+	
 	//Numero de acciones maximas
-	private int randomLimit = 5;
+	private int randomLimit = 6;
 	
 	
 	public Behavior(){
@@ -37,6 +38,7 @@ public class Behavior {
 		 * 2 -> Ring the Bell		Normal		SHAKE
 		 * 3 -> Move the Box		Normal		SCROLL
 		 * 4 -> Thrown In			Football	SHAKE
+		 * 5 -> Fly					Normal		TAP
 		 * 
 		*/
 		
@@ -64,6 +66,8 @@ public class Behavior {
 			return 1;
 		else if (t == 4)
 			return 2;
+		else if (t == 5)
+			return 0;
 		else 
 			return 0;
 		
@@ -81,6 +85,8 @@ public class Behavior {
 			return R.drawable.scrollbox;
 		else if (t == 4)
 			return R.drawable.backgroundfootballthrowin;
+		else if(t == 5)
+			return R.drawable.spiderbackground;
 		
 		else
 			return 0;
@@ -114,6 +120,11 @@ public class Behavior {
 			haveObject = true;
 			return R.drawable.throwininitial;
 		}
+		else if(t == 5)
+		{			
+			haveObject = true;
+			return R.drawable.fly;			
+		}
 		
 		else
 			return 0;
@@ -131,6 +142,8 @@ public class Behavior {
 			return 0;
 		else if(t == 4)
 			return R.drawable.throwinfinal;
+		else if(t == 5)		
+			return R.drawable.spot;
 					
 		else
 			return 0;
@@ -139,8 +152,7 @@ public class Behavior {
 	public int findObjectInitialSound(int t){
 		
 		if(t == 0)
-			return R.drawable.front2;
-
+			return R.raw.compastempo120;
 		else if (t == 1)
 			return R.raw.compastempo120;
 		else if (t == 2)
@@ -148,6 +160,8 @@ public class Behavior {
 		else if (t == 3)
 			return R.raw.compastempo120;
 		else if (t == 4)
+			return R.raw.compastempo120;
+		else if (t == 5)
 			return R.raw.compastempo120;
 					
 		else
@@ -165,6 +179,8 @@ public class Behavior {
 		else if (t == 3)
 			return R.raw.winsound;
 		else if (t == 4)
+			return R.raw.winsound;
+		else if(t == 5)		
 			return R.raw.winsound;
 		else
 			return 0;
@@ -192,6 +208,11 @@ public class Behavior {
 			return R.drawable.scrollboxwin2;
 		}
 		else if(t == 4)
+		{
+			haveFinalBackground = false;
+			return 0;
+		}
+		else if(t == 5)
 		{
 			haveFinalBackground = false;
 			return 0;
