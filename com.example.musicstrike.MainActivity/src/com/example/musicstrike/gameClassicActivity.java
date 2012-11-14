@@ -419,6 +419,9 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		
 		ImageView vh = (ImageView) findViewById(R.id.victoryHands);
 		vh.setVisibility(View.VISIBLE);
+        vh.bringToFront();
+		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        vh.startAnimation(shake);
 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
