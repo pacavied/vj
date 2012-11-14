@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.channels.AlreadyConnectedException;
 import java.util.Timer;
 
 import android.annotation.SuppressLint;
@@ -55,6 +56,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 
 	private MediaPlayer player;
 	private MediaPlayer player2;
+	private MediaPlayer player3;
+	private int indexMediaPlayer = 0;
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = true;
 	private GestureDetector gestureScanner;
@@ -68,6 +71,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private int objectID = -1;
 	private ImageView objectView = null;
 	private Behavior behavior;
+	private boolean alreadyWin = false;
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -98,9 +102,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         player.start();
         
         player2 = MediaPlayer.create(this, R.raw.winsound);
+        player3 = MediaPlayer.create(this, R.raw.winsound);
         //player.setLooping(true);
         player2.setVolume(300, 300);
+        player3.setVolume(300, 300);
         try {
+        	player3.prepare();
 			player2.prepare();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
@@ -149,7 +156,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			public void run() {
 
 				
-				
+				alreadyWin = false;
 				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
 				
 				
@@ -164,6 +171,26 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				
 				ImageView vh = (ImageView) findViewById(R.id.victoryHands);
 				vh.setVisibility(View.INVISIBLE);
+				
+				prepareSounds(behavior.finalSound);
+				
+				/*
+				Resources resources = getResources();
+				AssetFileDescriptor afd = resources.openRawResourceFd(behavior.finalSound);
+				try {
+					player2.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+					player2.prepare();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+				
 				
 				
 				if(objectView != null)
@@ -374,9 +401,11 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Scroll!");
+			if(!alreadyWin){	
 			updateSpritesAndBackgrounds();
-			player2.start();
 			refreshHighScore();
+			}
+			alreadyWin = true;
 			//scroll = false;
 			//waitAndClose(600, layout, view);
 		}
@@ -427,6 +456,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         vh.bringToFront();
 		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         vh.startAnimation(shake);
+        
+        playFinalSound();
 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
@@ -448,9 +479,11 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Just on Time!");
+			if(!alreadyWin){
 			updateSpritesAndBackgrounds();
-			player2.start();
 			refreshHighScore();
+			}
+			alreadyWin = true;
 			tap = false;
 			
 			//waitAndClose(600, layout, tv);
@@ -479,12 +512,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			{
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Shaked!");
+				if(!alreadyWin){
 				updateSpritesAndBackgrounds();
-				//waitAndClose(600, layout, tv);
 				if(!monitorBool)
-				player2.start();
-				refreshHighScore();
-				//shake = false;
+					refreshHighScore();
+				}
+				alreadyWin = true;
 				Log.e("shake","shake");
 				
 			}
@@ -500,12 +533,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				Log.e("Right","Right");
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Moved right!");
-				updateSpritesAndBackgrounds();
-				//waitAndClose(600, layout, tv);
-				if(!monitorBool)
-				player2.start();
-				refreshHighScore();
-				//moveRight = false;
+				if(!alreadyWin){
+					updateSpritesAndBackgrounds();
+					if(!monitorBool)
+						refreshHighScore();
+					}
+				alreadyWin = true;
 				
 			}
 			else if (pitch < -3 && (!shake && !moveRight) ) // Left y Right se confunden con shake a veces. 
@@ -518,13 +551,13 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			{
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Moved left!");
-				updateSpritesAndBackgrounds();
-				//waitAndClose(600, layout, tv);
-				if(!monitorBool)
-				player2.start();
-				refreshHighScore();
+				if(!alreadyWin){
+					updateSpritesAndBackgrounds();
+					if(!monitorBool)
+						refreshHighScore();
+					}
+				alreadyWin = true;
 				Log.e("left","left");
-				//moveLeft = false;
 			}	
 
 			else if (pitch > 3 && (!shake && !moveLeft) ) // Left y Right se confunden con shake a veces. 
@@ -561,6 +594,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         player.release();
         //player2.reset();
         player2.release();
+        player3.release();
         try {
 			saveHighScore() ;
 		} catch (IOException e) {
@@ -687,6 +721,52 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		TextView HSView = (TextView) findViewById(R.id.CScore);
         HSView.setText("Score: " + currentScore);
 		
+	}
+	
+	private void prepareSounds(int finalSound){
+		
+		if(indexMediaPlayer == 0){
+			
+			player2.release();
+			player2 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			try {
+				player2.prepare();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		else{
+			
+			player3.release();
+			player3 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			try {
+				player3.prepare();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	private void playFinalSound(){
+		if(indexMediaPlayer == 0){
+			player2.start();
+			indexMediaPlayer++;
+		}
+		else{
+			player3.start();
+			indexMediaPlayer--;	
+		}
 	}
 	
 }

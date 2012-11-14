@@ -157,16 +157,15 @@ public class Behavior {
 	public int findObjectFinalSound(int t){
 		
 		if(t == 0)		
-			return R.drawable.front2;
-
+			return R.raw.winsound;
 		else if(t == 1)
-			return R.raw.compastempo120;
+			return R.raw.winsound;
 		else if(t == 2)
-			return R.raw.compastempo120;
+			return R.raw.bellsound;
 		else if (t == 3)
-			return R.raw.compastempo120;
+			return R.raw.winsound;
 		else if (t == 4)
-			return R.raw.compastempo120;
+			return R.raw.winsound;
 		else
 			return 0;
 		}
