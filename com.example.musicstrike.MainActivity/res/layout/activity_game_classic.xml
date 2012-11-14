@@ -3,8 +3,8 @@
     android:id="@+id/gameClassic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gamebackground1"
-    android:gravity="bottom" >
+    android:gravity="bottom" 
+    android:background="#FFFFFF" >
 
     <TextView
         android:id="@+id/HScore"
@@ -44,5 +44,7 @@
         android:scaleType="fitEnd"
         android:src="@drawable/manos"
         android:visibility="invisible" />
+
+   
 
 </RelativeLayout>

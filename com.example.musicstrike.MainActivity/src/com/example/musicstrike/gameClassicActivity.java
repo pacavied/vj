@@ -57,25 +57,25 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private MediaPlayer player2;
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = true;
-	private boolean haveToDestroyAnObject = false;
 	private GestureDetector gestureScanner;
 	private SensorManager mSensorManager;
 	private float mAccel; // acceleration apart from gravity
 	private float mAccelCurrent; // current acceleration including gravity
 	private float mAccelLast; // last acceleration including gravity
-	private boolean monitorBool, readyToStart = false, dalomismo = true;	
+	private boolean monitorBool, dalomismo = true;	
 	private int currentScore = 0;
 	private int highscore = 0;
 	private int objectID = -1;
 	private ImageView objectView = null;
 	private Behavior behavior;
 	
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Intent intent = getIntent();
+        getIntent();
         setContentView(R.layout.activity_game_classic);          
         
         //SManager = new ScoreManager();
@@ -121,7 +121,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	    pitch = 0;
 	    
 	    
-
+/*
 		AnimationSet set = new AnimationSet(true);
 		set.setFillAfter(true);
 		Animation anim = (Animation)AnimationUtils.loadAnimation(this, R.anim.tocenter_animation);
@@ -138,7 +138,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         rl.addView(iv, lp);
         
         iv.startAnimation(set);	            
-        
+        */
 	    
 	    
 	    player.setOnPreparedListener(this);
@@ -165,6 +165,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				ImageView vh = (ImageView) findViewById(R.id.victoryHands);
 				vh.setVisibility(View.INVISIBLE);
 				
+				
 				if(objectView != null)
 					rl.removeView(objectView);
 				
@@ -177,13 +178,14 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 					objectID = objectView.getId();
 					
 					objectView.setImageResource(behavior.objectInitialSprite);
-					haveToDestroyAnObject = true;
 					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 					        RelativeLayout.LayoutParams.WRAP_CONTENT,
 					        RelativeLayout.LayoutParams.WRAP_CONTENT);
-					lp.leftMargin = 100;
+					lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+					/*lp.leftMargin = 100;
 					lp.topMargin = 100;
-					
+					*/
 					rl.addView(objectView, lp);
 					
 				}
@@ -364,12 +366,15 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         return super.onOptionsItemSelected(item);
     }
     
+    //scroll
+    
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) 
 	{
 		if (scroll) 
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Scroll!");
+			updateSpritesAndBackgrounds();
 			player2.start();
 			refreshHighScore();
 			//scroll = false;
@@ -426,8 +431,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
 			iv.setImageResource(behavior.objectFinalSprite);
-			haveToDestroyAnObject = true;
 		}
+		
 		if(behavior.haveFinalBackground){
 			RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
 			rl.setBackgroundResource(behavior.finalBackground);
@@ -474,6 +479,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			{
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Shaked!");
+				updateSpritesAndBackgrounds();
 				//waitAndClose(600, layout, tv);
 				if(!monitorBool)
 				player2.start();
@@ -494,6 +500,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				Log.e("Right","Right");
 				TextView tv = (TextView) findViewById(R.id.textView1);
 				tv.setText("Moved right!");
+				updateSpritesAndBackgrounds();
 				//waitAndClose(600, layout, tv);
 				if(!monitorBool)
 				player2.start();
@@ -647,8 +654,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		StringBuffer fileContent = new StringBuffer("");
 
 		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = fis.read(buffer)) != -1) {
+		int lenght;
+		while ((lenght = fis.read(buffer)) != -1) {
 		    fileContent.append(new String(buffer));
 		}
 				

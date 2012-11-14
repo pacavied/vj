@@ -15,7 +15,7 @@ public class Behavior {
 	public boolean haveFinalBackground = false;
 	public boolean haveObject = false;
 	//Numero de acciones maximas
-	private int randomLimit = 2;
+	private int randomLimit = 5;
 	
 	
 	public Behavior(){
@@ -30,9 +30,14 @@ public class Behavior {
 		finalBackground = findFinalBackground(type);
 		
 		/*
-		 * Behavior Definitions
-		 * 0 -> Spider
-		 * 1 -> Overtake Left
+		 * Behavior Definitions		Theme		Action
+		 * 
+		 * 0 -> Spider 				Normal		TAP
+		 * 1 -> Overtake Left		Normal		LEFT
+		 * 2 -> Ring the Bell		Normal		SHAKE
+		 * 3 -> Move the Box		Normal		SCROLL
+		 * 4 -> Thrown In			Football	SHAKE
+		 * 
 		*/
 		
 	}
@@ -53,6 +58,12 @@ public class Behavior {
 			return 0;
 		else if (t == 1)
 			return 3;
+		else if (t == 2)
+			return 2;
+		else if (t == 3)
+			return 1;
+		else if (t == 4)
+			return 2;
 		else 
 			return 0;
 		
@@ -62,9 +73,14 @@ public class Behavior {
 		
 		if(t == 0)			
 			return R.drawable.spiderbackground;
-			
 		else if (t == 1)
 			return R.drawable.overtakeleft;
+		else if (t == 2)
+			return R.drawable.bell;
+		else if(t == 3)
+			return R.drawable.scrollbox;
+		else if (t == 4)
+			return R.drawable.backgroundfootballthrowin;
 		
 		else
 			return 0;
@@ -83,7 +99,22 @@ public class Behavior {
 			haveObject = false;
 			return 0;
 		}
-					
+		else if(t == 2)
+		{
+			haveObject = false;
+			return 0;		
+		}
+		else if(t == 3)
+		{
+			haveObject = false;
+			return 0;		
+		}
+		else if(t == 4)
+		{
+			haveObject = true;
+			return R.drawable.throwininitial;
+		}
+		
 		else
 			return 0;
 		}
@@ -94,6 +125,12 @@ public class Behavior {
 			return R.drawable.spot;
 		else if(t ==1)
 			return 0;
+		else if (t == 2)
+			return 0;
+		else if (t == 3)
+			return 0;
+		else if(t == 4)
+			return R.drawable.throwinfinal;
 					
 		else
 			return 0;
@@ -105,6 +142,12 @@ public class Behavior {
 			return R.drawable.front2;
 
 		else if (t == 1)
+			return R.raw.compastempo120;
+		else if (t == 2)
+			return R.raw.compastempo120;
+		else if (t == 3)
+			return R.raw.compastempo120;
+		else if (t == 4)
 			return R.raw.compastempo120;
 					
 		else
@@ -118,7 +161,12 @@ public class Behavior {
 
 		else if(t == 1)
 			return R.raw.compastempo120;
-					
+		else if(t == 2)
+			return R.raw.compastempo120;
+		else if (t == 3)
+			return R.raw.compastempo120;
+		else if (t == 4)
+			return R.raw.compastempo120;
 		else
 			return 0;
 		}
@@ -134,6 +182,22 @@ public class Behavior {
 			haveFinalBackground = true;
 			return R.drawable.overtakeleftwin;
 		}
+		else if(t == 2)
+		{
+			haveFinalBackground = true;
+			return R.drawable.bellwin2;
+		}
+		else if(t == 3)
+		{
+			haveFinalBackground = true;
+			return R.drawable.scrollboxwin2;
+		}
+		else if(t == 4)
+		{
+			haveFinalBackground = false;
+			return 0;
+		}
+		
 		else
 			return 0;
 	}
