@@ -81,19 +81,13 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getIntent();
-        setContentView(R.layout.activity_game_classic);          
-        
-        //SManager = new ScoreManager();
+        setContentView(R.layout.activity_game_classic);   
+
         TextView HSView = (TextView) findViewById(R.id.HScore);
         try {
-        	/*Log.v("Highscore", "jalkjsak");
-        	String aux = getHighScore();
-        	highscore = Integer.parseInt(aux);
-        	Log.v("Highscore", "correct");*/
 			HSView.setText("High Score: " + getHighScore());
 			
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         
@@ -128,28 +122,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
 	    pitch = 0;
 	    
-	    
-/*
-		AnimationSet set = new AnimationSet(true);
-		set.setFillAfter(true);
-		Animation anim = (Animation)AnimationUtils.loadAnimation(this, R.anim.tocenter_animation);
-        anim.setFillAfter(true);
-        set.addAnimation(anim);
-        
-        ImageView iv = new ImageView(this);
-        iv.setImageResource(R.drawable.nota);
-        
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-        RelativeLayout.LayoutParams.WRAP_CONTENT,
-        RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rl.addView(iv, lp);
-        
-        iv.startAnimation(set);	            
-        */
-	    
-	    
 	    playerBase1.setOnPreparedListener(this);
+	    
 		// "While" principal
 		final Handler handler = new Handler();
 		handler.post(new Runnable() {
@@ -163,8 +137,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				
 				behavior = new Behavior();
 				
-				//tv1.setText("algo"+rnd);
-				// Caso en que toca TAP
 				//rnd=0; tap = false;
 				
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
@@ -310,11 +282,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				if(dalomismo)
 					handler.postDelayed(this, 2000);
 			}
-		});
-        
-        
-        
-        
+		});      
         
         
     }
@@ -408,7 +376,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			}
 			alreadyWin = true;
 			//scroll = false;
-			//waitAndClose(600, layout, view);
 		}
 		else
 		{
@@ -420,19 +387,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) 
 	{
 		return true;
-	}
-
-	// Metodo que borra vista tras X segundos
-	public void waitAndClose(int ms, final LinearLayout layout, final TextView tv) 
-	{
-		Handler handler = new Handler();
-		handler.postDelayed(new Runnable() 
-		{
-			public void run() 
-			{
-				layout.removeView(tv);
-			}
-		}, ms);
 	}
 
 	public boolean onDown(MotionEvent e) {
@@ -487,12 +441,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			alreadyWin = true;
 			tap = false;
 			
-			//waitAndClose(600, layout, tv);
 		} 
 		else 
 		{
 			lose();
-            //waitAndClose(600, layout, tv);
 		}
 		return true;
 	}
@@ -729,7 +681,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		if(indexMediaPlayer == 0){
 			
 			player2.release();
-			player2 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			player2 = MediaPlayer.create(gameClassicActivity.this, finalSound);
 			try {
 				player2.prepare();
 			} catch (IllegalStateException e) {
@@ -745,7 +697,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		else{
 			
 			player3.release();
-			player3 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			player3 = MediaPlayer.create(gameClassicActivity.this, finalSound);
 			try {
 				player3.prepare();
 			} catch (IllegalStateException e) {

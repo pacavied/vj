@@ -44,7 +44,6 @@
         android:scaleType="fitEnd"
         android:src="@drawable/manos"
         android:visibility="invisible" />
-
    
 
 </RelativeLayout>
