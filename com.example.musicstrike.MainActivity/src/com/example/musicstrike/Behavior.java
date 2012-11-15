@@ -171,7 +171,7 @@ public class Behavior {
 	public int findObjectFinalSound(int t){
 		
 		if(t == 0)		
-			return R.raw.winsound;
+			return R.raw.slurp;
 		else if(t == 1)
 			return R.raw.winsound;
 		else if(t == 2)
@@ -181,7 +181,7 @@ public class Behavior {
 		else if (t == 4)
 			return R.raw.winsound;
 		else if(t == 5)		
-			return R.raw.winsound;
+			return R.raw.tziuup;
 		else
 			return 0;
 		}
