@@ -58,7 +58,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private MediaPlayer playerBase2;
 	private MediaPlayer player2;
 	private MediaPlayer player3;
-	private int indexMediaPlayer = 0;
+	private int indexMediaPlayer = 0, indexMediaPlayerBase = 0;
+	
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = true;
 	private GestureDetector gestureScanner;
@@ -91,16 +92,38 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			e1.printStackTrace();
 		}
         
-        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b4seg);       
-        //playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b4seg); 
+        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b);       
+        playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b); 
         playerBase1.setVolume(100, 100);
-        playerBase1.start();
+        playerBase2.setVolume(100, 100);
+        
+    	playerBase1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+    	    public void onCompletion(MediaPlayer mp) {
+    	        finish(); // finish current activity
+    	    }
+    	});
+    	
+    	playerBase1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+			
+			public void onPrepared(MediaPlayer mp) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+    	
+    	playerBase2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+    	    public void onCompletion(MediaPlayer mp) {
+    	        finish(); // finish current activity
+    	    }
+    	});
+        
         
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
-        //player.setLooping(true);
-        player2.setVolume(300, 300);
-        player3.setVolume(300, 300);
+
+        player2.setVolume(100, 100);
+        player3.setVolume(100, 100);
+        
         try {
         	player3.prepare();
 			player2.prepare();
@@ -122,7 +145,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
 	    pitch = 0;
 	    
-	    playerBase1.setOnPreparedListener(this);
+	    //playerBase1.setOnPreparedListener(this);
 	    
 		// "While" principal
 		final Handler handler = new Handler();
@@ -130,6 +153,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			@SuppressLint("ParserError")
 			public void run() {
 
+				Log.e("Start","Empieza vuelta");
 				
 				alreadyWin = false;
 				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
@@ -145,7 +169,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				ImageView vh = (ImageView) findViewById(R.id.victoryHands);
 				vh.setVisibility(View.INVISIBLE);
 				
-				prepareSounds(behavior.finalSound);
+				prepareSounds(behavior.finalSound, R.raw.compastempo120b);
+				playBaseSound();
 				
 				/*
 				Resources resources = getResources();
@@ -207,8 +232,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						
 						animateTextView(tv); 
 						
-						if(!monitorBool)
-						playerBase1.seekTo(0);
+						
 						
 						Log.v("TAP", "Tap Now");
 						
@@ -225,8 +249,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setGravity(Gravity.CENTER);
 						tv.setText("Scroll now!");				
 						animateTextView(tv); 
-						if(!monitorBool)
-						playerBase1.seekTo(0);
+						
 						Log.v("SCROLL", "Scroll Now");
 							
 						
@@ -241,8 +264,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setGravity(Gravity.CENTER);
 						tv.setText("Shake now!");				
 						animateTextView(tv); 
-						if(!monitorBool)
-						playerBase1.seekTo(0);
+						
 						Log.v("SHAKE", "Shake Now");	
 						
 				}
@@ -257,8 +279,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setTextSize(80);
 						tv.setText("Left now!");				
 						animateTextView(tv); 
-						if(!monitorBool)
-						playerBase1.seekTo(0);
+						
 						Log.v("LEFT", "Left Now");	
 						
 				}
@@ -273,8 +294,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 						tv.setGravity(Gravity.CENTER);
 						tv.setText("Right now!");				
 						animateTextView(tv); 
-						if(!monitorBool)
-						playerBase1.seekTo(0);
+						
 						Log.v("RIGHT", "Right Now");
 							
 						
@@ -331,8 +351,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         		monitorBool = true;
                 playerBase1.reset();
                 playerBase1.release();
+                playerBase2.reset();
+                playerBase2.release();
                 player2.reset();
                 player2.release();
+                player3.reset();
+                player3.release();
                 dalomismo = false;
                 stopService(getIntent());
                 finish();
@@ -545,6 +569,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		monitorBool = true;
         //player.reset();
         playerBase1.release();
+        playerBase2.release();
         //player2.reset();
         player2.release();
         player3.release();
@@ -593,7 +618,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		tv.setText("Are You Ready?");			
 		animateIntro(tv);
 	}
-	
+	//ANIMACION?
 	private void animateIntro(TextView tv)
 	{
 		AnimationSet set = new AnimationSet(true);
@@ -676,7 +701,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		
 	}
 	
-	private void prepareSounds(int finalSound){
+	private void prepareSounds(int finalSound, int baseSound){
 		
 		if(indexMediaPlayer == 0){
 			
@@ -709,6 +734,39 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			}
 			
 		}
+		
+		if(indexMediaPlayerBase == 0){
+					
+				playerBase1.release();
+				playerBase1 = MediaPlayer.create(gameClassicActivity.this, baseSound);
+				try {
+					playerBase1.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+								
+			}
+			else{
+				
+				playerBase2.release();
+				playerBase2 = MediaPlayer.create(gameClassicActivity.this, baseSound);
+				try {
+					playerBase2.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+	
+	
 	}
 	
 	private void playFinalSound(){
@@ -721,5 +779,17 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			indexMediaPlayer--;	
 		}
 	}
+	private void playBaseSound(){
+		if(indexMediaPlayerBase == 0){
+			playerBase1.start();
+			indexMediaPlayerBase++;
+		}
+		else{
+			playerBase2.start();
+			indexMediaPlayerBase--;	
+		}
+	}
+	
+
 	
 }
