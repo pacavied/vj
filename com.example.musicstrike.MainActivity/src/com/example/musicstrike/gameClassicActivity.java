@@ -16,6 +16,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -547,6 +549,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         player2.release();
         player3.release();
         instructionPlayer.release();
+        initialPlayer.release();
+        handsPlayer.release();
+        
+        
         try {
 			saveHighScore() ;
 		} catch (IOException e) {
@@ -633,25 +639,27 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	}
 
 	
-	private String getHighScore() throws IOException
+	private int getHighScore() throws IOException
 	{
 		
-		FileInputStream fis;
+		/*FileInputStream fis;
 		fis = openFileInput("highscore_file");
+		
 		StringBuffer fileContent = new StringBuffer("");
 
 		byte[] buffer = new byte[1024];
 		int length;
 		while ((length = fis.read(buffer)) != -1) {
 		    fileContent.append(new String(buffer));
-		}
-				
-		return fileContent.toString();
+		}*/
+		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+		int score = prefs.getInt("key", 0); //0 is the default value		
+		return score;
 	}
 	
 	private void saveHighScore() throws IOException
 	{
-		String FILENAME = "highscore_file";
+		/*String FILENAME = "highscore_file";
 		String scoreToSave;
 		String aux = getHighScore();
 		aux = aux.replaceAll("[^\\w\\s\\.]", "");
@@ -663,7 +671,20 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 		fos.write(scoreToSave.getBytes());
-		fos.close();
+		fos.close();*/
+		String scoreToSave;
+		int highscore = getHighScore();
+		//aux = aux.replaceAll("[^\\w\\s\\.]", "");
+		//highscore = Integer.parseInt(aux);
+		if(currentScore > highscore)
+			scoreToSave = "" + currentScore;
+		else
+			scoreToSave = "" + highscore;		
+		
+		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+		Editor editor = prefs.edit();
+		editor.putInt("key", Integer.parseInt(scoreToSave));
+		editor.commit();
 		
 		
 	}
