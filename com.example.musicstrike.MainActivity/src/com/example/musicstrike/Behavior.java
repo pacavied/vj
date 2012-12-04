@@ -166,7 +166,7 @@ public class Behavior {
 	public int findObjectInitialSound(int t){
 		
 		if(t == 0)
-			return R.raw.mosca;
+			return R.raw.tinquetinquetinque;
 		else if (t == 1)
 			return R.raw.mosca;
 		else if (t == 2)
