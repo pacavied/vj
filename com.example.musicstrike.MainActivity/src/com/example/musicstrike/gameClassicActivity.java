@@ -61,13 +61,12 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 	private MediaPlayer playerBase1;
-	private MediaPlayer playerBase2;
 	private MediaPlayer player2;
 	private MediaPlayer player3;
 	private MediaPlayer instructionPlayer;
 	private MediaPlayer initialPlayer;
 	private MediaPlayer handsPlayer;
-	private int indexMediaPlayer = 0, indexMediaPlayerBase = 0;
+	private int indexMediaPlayer = 0;
 	
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = true;
@@ -84,6 +83,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private Behavior behavior;
 	private boolean alreadyWin = false;
 	private int roundsCounter = 0;
+	private boolean loseGame = false;
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -102,8 +102,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			e1.printStackTrace();
 		}
         
-        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b);       
-        playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b);
+        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b4seg);
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
         instructionPlayer = MediaPlayer.create(this, R.raw.winsound);
@@ -111,7 +110,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         initialPlayer = MediaPlayer.create(this, R.raw.winsound);
         
         playerBase1.setVolume(100, 100);
-        playerBase2.setVolume(100, 100);
         player2.setVolume(100, 100);
         player3.setVolume(100, 100);
         instructionPlayer.setVolume(100, 100);
@@ -127,11 +125,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		player2.setOnErrorListener(this);
 		player2.setOnPreparedListener(this);
 		player2.setOnVideoSizeChangedListener(this);
-        
-        playerBase2.setOnCompletionListener(this);
-		playerBase2.setOnErrorListener(this);
-		playerBase2.setOnPreparedListener(this);
-		playerBase2.setOnVideoSizeChangedListener(this);
         
 		playerBase1.setOnCompletionListener(this);
 		playerBase1.setOnErrorListener(this);
@@ -320,8 +313,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         		monitorBool = true;
                 playerBase1.reset();
                 playerBase1.release();
-                playerBase2.reset();
-                playerBase2.release();
                 player2.reset();
                 player2.release();
                 player3.reset();
@@ -425,7 +416,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 	public boolean onSingleTapUp(MotionEvent e) 
 	{
-		ImageView iv = (ImageView) findViewById(objectID);
 		
 		
 		//if (tap && e.getRawX() - iv.getWidth()/2 < iv.getLeft() && e.getRawX() + iv.getWidth()/2 > iv.getLeft() ) 
@@ -544,14 +534,13 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		monitorBool = true;
         
         playerBase1.release();
-        playerBase2.release();
         
         player2.release();
         player3.release();
         instructionPlayer.release();
         initialPlayer.release();
         handsPlayer.release();
-        
+        loseGame = true;
         
         try {
 			saveHighScore() ;
@@ -721,26 +710,18 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			
 		}
 		
-		if(indexMediaPlayerBase == 0){
-					
-				playerBase1.release();
-				playerBase1 = MediaPlayer.create(gameClassicActivity.this, baseSound);
-				playerBase1.setOnCompletionListener(this);
-				playerBase1.setOnErrorListener(this);
-				playerBase1.setOnPreparedListener(this);
-				playerBase1.setOnVideoSizeChangedListener(this);
-								
-			}
-			else{
-				
-				playerBase2.release();
-				playerBase2 = MediaPlayer.create(gameClassicActivity.this, baseSound);
-				playerBase2.setOnCompletionListener(this);
-				playerBase2.setOnErrorListener(this);
-				playerBase2.setOnPreparedListener(this);
-				playerBase2.setOnVideoSizeChangedListener(this);
-				
-			}
+		if(loseGame == false)
+			playerBase1.seekTo(0);
+	
+//				playerBase1.release();
+//				playerBase1 = MediaPlayer.create(gameClassicActivity.this, baseSound);
+//				playerBase1.setOnCompletionListener(this);
+//				playerBase1.setOnErrorListener(this);
+//				playerBase1.setOnPreparedListener(this);
+//				playerBase1.setOnVideoSizeChangedListener(this);
+							
+			
+			
 		
 		instructionPlayer.release();
 		instructionPlayer = MediaPlayer.create(gameClassicActivity.this, instructionSound);
@@ -786,17 +767,16 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		handsPlayer.start();
 	}
 	private void playBaseSound(){
-		if(indexMediaPlayerBase == 0){
+		
+		if(roundsCounter == 0){
 			playerBase1.start();
-			indexMediaPlayerBase++;
-		}
-		else{
-			playerBase2.start();
-			indexMediaPlayerBase--;	
-		}
+		
+		
+		
 		instructionPlayer.start();
 		
 		initialPlayer.start();
+		}
 	}
 
 
