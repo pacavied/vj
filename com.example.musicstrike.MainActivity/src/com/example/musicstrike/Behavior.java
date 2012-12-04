@@ -17,7 +17,7 @@ public class Behavior {
 	public boolean haveObject = false;
 	
 	//Numero de acciones maximas
-	private int randomLimit = 7;
+	private int randomLimit = 9;
 	
 	
 	public Behavior(){
@@ -33,15 +33,17 @@ public class Behavior {
 		instructionSound = findInstructionSound(type);
 		
 		/*
-		 * Behavior Definitions		Theme		Action
+		 * Behavior Definitions					Theme		Action
 		 * 
-		 * 0 -> Spider 				Normal		TAP
-		 * 1 -> Overtake Left		Normal		LEFT
-		 * 2 -> Ring the Bell		Normal		SHAKE
-		 * 3 -> Move the Box		Normal		SCROLL
-		 * 4 -> Thrown In			Football	SHAKE
-		 * 5 -> Fly					Normal		TAP
-		 * 6 -> Overtake Right		Normal		RIGHT
+		 * 0 -> Spider 							Normal		TAP
+		 * 1 -> Overtake Left					Normal		LEFT
+		 * 2 -> Ring the Bell					Normal		SHAKE
+		 * 3 -> Move the Box					Normal		SCROLL
+		 * 4 -> Thrown In						Football	SHAKE
+		 * 5 -> Fly								Normal		TAP
+		 * 6 -> Overtake Right					Normal		RIGHT
+		 * 7 -> Evade Football Player Left		Football	LEFT
+		 * 8 -> Evade Football Player Right		Football	RIGHT
 		 * 
 		*/
 		
@@ -73,6 +75,10 @@ public class Behavior {
 			return 0;			
 		else if (t == 6)
 			return 4;
+		else if(t == 7)
+			return 3;
+		else if(t == 8)
+			return 4;
 		else 
 			return 0;
 		
@@ -94,6 +100,10 @@ public class Behavior {
 			return R.drawable.spiderbackground;
 		else if (t == 6)
 			return R.drawable.overtakeright;
+		else if (t == 7)
+			return R.drawable.backevadeleft;
+		else if(t == 8)
+			return R.drawable.backevaderight;
 		
 		else
 			return 0;
@@ -137,6 +147,16 @@ public class Behavior {
 			haveObject = false;
 			return 0;		
 		}
+		else if(t == 7)
+		{
+			haveObject = false;
+			return 0;		
+		}
+		else if(t == 8)
+		{
+			haveObject = false;
+			return 0;		
+		}
 		
 		else
 			return 0;
@@ -157,6 +177,10 @@ public class Behavior {
 		else if(t == 5)		
 			return R.drawable.spot;
 		else if (t == 6)
+			return 0;
+		else if (t == 7)
+			return 0;
+		else if (t == 8)
 			return 0;
 					
 		else
@@ -179,6 +203,10 @@ public class Behavior {
 			return R.raw.mosca;
 		else if (t == 6)
 			return R.raw.traffic;
+		else if (t == 7)
+			return R.raw.run;
+		else if (t == 8)
+			return R.raw.run;
 					
 		else
 			return 0;
@@ -200,6 +228,10 @@ public class Behavior {
 			return R.raw.tziuup;
 		else if(t == 6)		
 			return R.raw.autoarranca;
+		else if(t == 7)		
+			return R.raw.evadefinal;
+		else if(t == 8)		
+			return R.raw.evadefinal;
 		else
 			return 0;
 		}
@@ -255,6 +287,16 @@ public class Behavior {
 		{
 			haveFinalBackground = true;
 			return R.drawable.overtakerightwin;
+		}
+		else if(t == 7)
+		{
+			haveFinalBackground = true;
+			return R.drawable.backevadeleftfinal;
+		}
+		else if(t == 8)
+		{
+			haveFinalBackground = true;
+			return R.drawable.backevaderightfinal;
 		}
 		
 		else
