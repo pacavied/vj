@@ -768,11 +768,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	}
 	private void playBaseSound(){
 		
-		if(roundsCounter == 0){
+		if(roundsCounter == 0)
 			playerBase1.start();
 		
 		
-		
+		if(loseGame == false){
 		instructionPlayer.start();
 		
 		initialPlayer.start();
