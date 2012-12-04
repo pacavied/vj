@@ -16,7 +16,7 @@ public class Behavior {
 	public boolean haveObject = false;
 	
 	//Numero de acciones maximas
-	private int randomLimit = 6;
+	private int randomLimit = 7;
 	
 	
 	public Behavior(){
@@ -39,6 +39,7 @@ public class Behavior {
 		 * 3 -> Move the Box		Normal		SCROLL
 		 * 4 -> Thrown In			Football	SHAKE
 		 * 5 -> Fly					Normal		TAP
+		 * 6 -> Overtake Right		Normal		RIGHT
 		 * 
 		*/
 		
@@ -66,8 +67,10 @@ public class Behavior {
 			return 1;
 		else if (t == 4)
 			return 2;
-		else if (t == 5)
-			return 0;
+		else if(t == 0)
+			return 0;			
+		else if (t == 6)
+			return 4;
 		else 
 			return 0;
 		
@@ -87,6 +90,8 @@ public class Behavior {
 			return R.drawable.backgroundfootballthrowin;
 		else if(t == 5)
 			return R.drawable.spiderbackground;
+		else if (t == 6)
+			return R.drawable.overtakeright;
 		
 		else
 			return 0;
@@ -100,7 +105,7 @@ public class Behavior {
 			haveObject = true;
 			return R.drawable.spider;			
 		}
-		else if(t ==1)
+		else if(t == 1)
 		{
 			haveObject = false;
 			return 0;
@@ -125,6 +130,11 @@ public class Behavior {
 			haveObject = true;
 			return R.drawable.fly;			
 		}
+		else if(t == 6)
+		{
+			haveObject = false;
+			return 0;		
+		}
 		
 		else
 			return 0;
@@ -144,6 +154,8 @@ public class Behavior {
 			return R.drawable.throwinfinal;
 		else if(t == 5)		
 			return R.drawable.spot;
+		else if (t == 6)
+			return 0;
 					
 		else
 			return 0;
@@ -162,6 +174,8 @@ public class Behavior {
 		else if (t == 4)
 			return R.raw.compastempo120;
 		else if (t == 5)
+			return R.raw.compastempo120;
+		else if (t == 6)
 			return R.raw.compastempo120;
 					
 		else
@@ -182,6 +196,8 @@ public class Behavior {
 			return R.raw.throwin;
 		else if(t == 5)		
 			return R.raw.tziuup;
+		else if(t == 6)		
+			return R.raw.autoarranca;
 		else
 			return 0;
 		}
@@ -216,6 +232,11 @@ public class Behavior {
 		{
 			haveFinalBackground = false;
 			return 0;
+		}
+		else if(t == 6)
+		{
+			haveFinalBackground = true;
+			return R.drawable.overtakerightwin;
 		}
 		
 		else

@@ -206,7 +206,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 					        RelativeLayout.LayoutParams.WRAP_CONTENT,
 					        RelativeLayout.LayoutParams.WRAP_CONTENT);
-					lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					lp.addRule(RelativeLayout.CENTER_VERTICAL);
 					lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
 					/*lp.leftMargin = 100;
 					lp.topMargin = 100;
@@ -591,6 +591,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	
 	private void animateTextView(TextView tv)
 	{
+		tv.bringToFront();
 		AnimationSet set = new AnimationSet(true);
 		set.setFillAfter(true);
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);
