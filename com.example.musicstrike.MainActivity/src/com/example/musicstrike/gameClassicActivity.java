@@ -63,6 +63,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private MediaPlayer player2;
 	private MediaPlayer player3;
 	private MediaPlayer instructionPlayer;
+	private MediaPlayer initialPlayer;
+	private MediaPlayer handsPlayer;
 	private int indexMediaPlayer = 0, indexMediaPlayerBase = 0;
 	
 	private float pitch;
@@ -99,15 +101,20 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		}
         
         playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b);       
-        playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b); 
-        playerBase1.setVolume(100, 100);
-        playerBase2.setVolume(100, 100);
+        playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b);
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
         instructionPlayer = MediaPlayer.create(this, R.raw.winsound);
+        handsPlayer = MediaPlayer.create(this, R.raw.yeeee);
+        initialPlayer = MediaPlayer.create(this, R.raw.winsound);
+        
+        playerBase1.setVolume(100, 100);
+        playerBase2.setVolume(100, 100);
         player2.setVolume(100, 100);
         player3.setVolume(100, 100);
         instructionPlayer.setVolume(100, 100);
+        handsPlayer.setVolume(100, 100);
+        initialPlayer.setVolume(50, 50);
         
         player3.setOnCompletionListener(this);
 		player3.setOnErrorListener(this);
@@ -133,7 +140,16 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		instructionPlayer.setOnErrorListener(this);
 		instructionPlayer.setOnPreparedListener(this);
 		instructionPlayer.setOnVideoSizeChangedListener(this);
-        
+		
+		initialPlayer.setOnCompletionListener(this);
+		initialPlayer.setOnErrorListener(this);
+		initialPlayer.setOnPreparedListener(this);
+		initialPlayer.setOnVideoSizeChangedListener(this);
+		
+		handsPlayer.setOnCompletionListener(this);
+		handsPlayer.setOnErrorListener(this);
+		handsPlayer.setOnPreparedListener(this);
+		handsPlayer.setOnVideoSizeChangedListener(this);  
         
         
         gestureScanner = new GestureDetector(this);
@@ -660,7 +676,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 	}
 	
-	private void prepareSounds(int instructionSound, int finalSound, int baseSound){
+	private void prepareSounds(int instructionSound, int initialSound, int finalSound, int baseSound){
 		
 		if(indexMediaPlayer == 0){
 			
@@ -711,6 +727,13 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		instructionPlayer.setOnErrorListener(this);
 		instructionPlayer.setOnPreparedListener(this);
 		instructionPlayer.setOnVideoSizeChangedListener(this);
+		
+		initialPlayer.release();
+		initialPlayer = MediaPlayer.create(gameClassicActivity.this, initialSound);
+		initialPlayer.setOnCompletionListener(this);
+		initialPlayer.setOnErrorListener(this);
+		initialPlayer.setOnPreparedListener(this);
+		initialPlayer.setOnVideoSizeChangedListener(this);
 	
 	
 	}
@@ -718,7 +741,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private void prepareLevelSounds()
 	{
 		//if (roundsCounter < 10)
-			prepareSounds(behavior.instructionSound, behavior.finalSound, R.raw.compastempo120b);
+			prepareSounds(behavior.instructionSound, behavior.initialSound, behavior.finalSound, R.raw.compastempo120b);
 		//else
 			//prepareSounds(behavior.finalSound, R.raw.compastempo125d);
 	}
@@ -732,6 +755,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			player3.start();
 			indexMediaPlayer--;	
 		}
+		handsPlayer.start();
 	}
 	private void playBaseSound(){
 		if(indexMediaPlayerBase == 0){
@@ -743,6 +767,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			indexMediaPlayerBase--;	
 		}
 		instructionPlayer.start();
+		initialPlayer.start();
 	}
 
 
