@@ -17,7 +17,7 @@ public class Behavior {
 	public boolean haveObject = false;
 	
 	//Numero de acciones maximas
-	private int randomLimit = 9;
+	private int randomLimit = 10;
 	
 	
 	public Behavior(){
@@ -44,6 +44,7 @@ public class Behavior {
 		 * 6 -> Overtake Right					Normal		RIGHT
 		 * 7 -> Evade Football Player Left		Football	LEFT
 		 * 8 -> Evade Football Player Right		Football	RIGHT
+		 * 9 -> Penalty Kick					Football	TAP
 		 * 
 		*/
 		
@@ -104,6 +105,8 @@ public class Behavior {
 			return R.drawable.backevadeleft;
 		else if(t == 8)
 			return R.drawable.backevaderight;
+		else if(t == 9)
+			return R.drawable.initialpenalty;
 		
 		else
 			return 0;
