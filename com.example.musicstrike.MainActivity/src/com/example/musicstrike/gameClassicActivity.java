@@ -23,7 +23,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -52,7 +55,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class gameClassicActivity extends Activity implements OnGestureListener, OnPreparedListener {
+public class gameClassicActivity extends Activity implements OnGestureListener, OnPreparedListener,
+OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 	private MediaPlayer playerBase1;
 	private MediaPlayer playerBase2;
@@ -98,47 +102,38 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         playerBase2 = MediaPlayer.create(this, R.raw.compastempo120b); 
         playerBase1.setVolume(100, 100);
         playerBase2.setVolume(100, 100);
-        
-    	playerBase1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-    	    public void onCompletion(MediaPlayer mp) {
-    	        finish(); // finish current activity
-    	    }
-    	});
-    	
-    	playerBase1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-			
-			public void onPrepared(MediaPlayer mp) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-    	
-    	playerBase2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-    	    public void onCompletion(MediaPlayer mp) {
-    	        finish(); // finish current activity
-    	    }
-    	});
-        
-        
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
         instructionPlayer = MediaPlayer.create(this, R.raw.winsound);
-
         player2.setVolume(100, 100);
         player3.setVolume(100, 100);
         instructionPlayer.setVolume(100, 100);
         
-        try {
-        	player3.prepare();
-			player2.prepare();
-			instructionPlayer.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        player3.setOnCompletionListener(this);
+		player3.setOnErrorListener(this);
+		player3.setOnPreparedListener(this);
+		player3.setOnVideoSizeChangedListener(this);
+		
+		player2.setOnCompletionListener(this);
+		player2.setOnErrorListener(this);
+		player2.setOnPreparedListener(this);
+		player2.setOnVideoSizeChangedListener(this);
+        
+        playerBase2.setOnCompletionListener(this);
+		playerBase2.setOnErrorListener(this);
+		playerBase2.setOnPreparedListener(this);
+		playerBase2.setOnVideoSizeChangedListener(this);
+        
+		playerBase1.setOnCompletionListener(this);
+		playerBase1.setOnErrorListener(this);
+		playerBase1.setOnPreparedListener(this);
+		playerBase1.setOnVideoSizeChangedListener(this);
+		
+		instructionPlayer.setOnCompletionListener(this);
+		instructionPlayer.setOnErrorListener(this);
+		instructionPlayer.setOnPreparedListener(this);
+		instructionPlayer.setOnVideoSizeChangedListener(this);
+        
         
         
         gestureScanner = new GestureDetector(this);
@@ -158,15 +153,16 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			@SuppressLint("ParserError")
 			public void run() {
 
-				Log.e("Start","Empieza vuelta");
-				
+				Log.v("Start","Empieza vuelta");
+				//if (alreadyWin == false && roundsCounter != 0)
+				//	lose();
+					
+					
 				alreadyWin = false;
 				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
 				
 				
 				behavior = new Behavior();
-				
-				//rnd=0; tap = false;
 				
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
 				rl.setBackgroundResource(behavior.backgroundImage);
@@ -177,22 +173,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				prepareLevelSounds();
 				playBaseSound();
 				
-				/*
-				Resources resources = getResources();
-				AssetFileDescriptor afd = resources.openRawResourceFd(behavior.finalSound);
-				try {
-					player2.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-					player2.prepare();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
 				
 				
 				
@@ -307,6 +287,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				
 				roundsCounter++;
 				
+				
 				if(dalomismo)
 					handler.postDelayed(this, 2000);
 			}
@@ -314,45 +295,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         
         
     }
-    
-    
-    public void onPrepared(MediaPlayer player1) {
-        player1.start();
-    }
-    
-   /* public int generateRandom()
-	{
-		double rnd = Math.random();
-		
-		if (rnd < 0.2) //TAP
-		{
-			rnd = 0;
-			scroll = false; shake = false; moveLeft = false; moveRight = false;
-		}
-		else if (rnd < 0.4) //SCROLL
-		{
-			rnd = 1;
-			tap = false; shake = false; moveLeft = false; moveRight = false;
-		}
-		else if (rnd < 0.6) //SHAKE
-		{
-			rnd = 2;
-			scroll = false; tap = false; moveLeft = false; moveRight = false;
-		}
-		else if (rnd < 0.8) //MOVE LEFT
-		{
-			rnd = 3;
-			scroll = false; shake = false; tap = false; moveRight = false;
-		}
-		else //MOVE RIGHT
-		{
-			rnd = 4;
-			scroll = false; shake = false; moveLeft = false; tap = false;
-		}
-		
-		return (int)rnd;
-	}
-    */
+  
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -464,7 +407,11 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 
 	public boolean onSingleTapUp(MotionEvent e) 
 	{
-		if (tap) 
+		ImageView iv = (ImageView) findViewById(objectID);
+		
+		
+		//if (tap && e.getRawX() - iv.getWidth()/2 < iv.getLeft() && e.getRawX() + iv.getWidth()/2 > iv.getLeft() ) 
+		if (tap)
 		{
 			TextView tv = (TextView) findViewById(R.id.textView1);
 			tv.setText("Just on Time!");
@@ -577,10 +524,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText("Wrong!");
 		monitorBool = true;
-        //player.reset();
+        
         playerBase1.release();
         playerBase2.release();
-        //player2.reset();
+        
         player2.release();
         player3.release();
         instructionPlayer.release();
@@ -719,15 +666,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			
 			player2.release();
 			player2 = MediaPlayer.create(gameClassicActivity.this, finalSound);
-			try {
-				player2.prepare();
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			player2.setOnCompletionListener(this);
+			player2.setOnErrorListener(this);
+			player2.setOnPreparedListener(this);
+			player2.setOnVideoSizeChangedListener(this);
 			
 			
 		}
@@ -735,15 +677,10 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			
 			player3.release();
 			player3 = MediaPlayer.create(gameClassicActivity.this, finalSound);
-			try {
-				player3.prepare();
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			player3.setOnCompletionListener(this);
+			player3.setOnErrorListener(this);
+			player3.setOnPreparedListener(this);
+			player3.setOnVideoSizeChangedListener(this);
 			
 		}
 		
@@ -751,44 +688,29 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 					
 				playerBase1.release();
 				playerBase1 = MediaPlayer.create(gameClassicActivity.this, baseSound);
-				try {
-					playerBase1.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				playerBase1.setOnCompletionListener(this);
+				playerBase1.setOnErrorListener(this);
+				playerBase1.setOnPreparedListener(this);
+				playerBase1.setOnVideoSizeChangedListener(this);
 								
 			}
 			else{
 				
 				playerBase2.release();
 				playerBase2 = MediaPlayer.create(gameClassicActivity.this, baseSound);
-				try {
-					playerBase2.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				playerBase2.setOnCompletionListener(this);
+				playerBase2.setOnErrorListener(this);
+				playerBase2.setOnPreparedListener(this);
+				playerBase2.setOnVideoSizeChangedListener(this);
 				
 			}
 		
 		instructionPlayer.release();
 		instructionPlayer = MediaPlayer.create(gameClassicActivity.this, instructionSound);
-		try {
-			instructionPlayer.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		instructionPlayer.setOnCompletionListener(this);
+		instructionPlayer.setOnErrorListener(this);
+		instructionPlayer.setOnPreparedListener(this);
+		instructionPlayer.setOnVideoSizeChangedListener(this);
 	
 	
 	}
@@ -822,7 +744,29 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		}
 		instructionPlayer.start();
 	}
-	
 
+
+	public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public boolean onError(MediaPlayer mp, int what, int extra) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public void onPrepared(MediaPlayer player1) {
+        //player1.start();
+    }
+
+
+
+
+	public void onCompletion(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
