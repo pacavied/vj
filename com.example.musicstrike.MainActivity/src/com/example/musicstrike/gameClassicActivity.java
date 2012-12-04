@@ -755,6 +755,12 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			player3.start();
 			indexMediaPlayer--;	
 		}
+		handsPlayer.release();
+		handsPlayer = MediaPlayer.create(gameClassicActivity.this, R.raw.yeeee);
+		handsPlayer.setOnCompletionListener(this);
+		handsPlayer.setOnErrorListener(this);
+		handsPlayer.setOnPreparedListener(this);
+		handsPlayer.setOnVideoSizeChangedListener(this); 
 		handsPlayer.start();
 	}
 	private void playBaseSound(){
@@ -767,6 +773,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			indexMediaPlayerBase--;	
 		}
 		instructionPlayer.start();
+		
 		initialPlayer.start();
 	}
 
