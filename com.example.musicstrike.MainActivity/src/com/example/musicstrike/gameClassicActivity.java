@@ -641,8 +641,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		StringBuffer fileContent = new StringBuffer("");
 
 		byte[] buffer = new byte[1024];
-		int lenght;
-		while ((lenght = fis.read(buffer)) != -1) {
+		int length;
+		while ((length = fis.read(buffer)) != -1) {
 		    fileContent.append(new String(buffer));
 		}
 				
@@ -734,6 +734,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		initialPlayer.setOnErrorListener(this);
 		initialPlayer.setOnPreparedListener(this);
 		initialPlayer.setOnVideoSizeChangedListener(this);
+		
 	
 	
 	}

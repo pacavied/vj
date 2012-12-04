@@ -168,17 +168,17 @@ public class Behavior {
 		if(t == 0)
 			return R.raw.mosca;
 		else if (t == 1)
-			return R.raw.mosca;
+			return R.raw.traffic;
 		else if (t == 2)
 			return R.raw.mosca;
 		else if (t == 3)
 			return R.raw.mosca;
 		else if (t == 4)
-			return R.raw.mosca;
+			return R.raw.stadium;
 		else if (t == 5)
 			return R.raw.mosca;
 		else if (t == 6)
-			return R.raw.mosca;
+			return R.raw.traffic;
 					
 		else
 			return 0;
