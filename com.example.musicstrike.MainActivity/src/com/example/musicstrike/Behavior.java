@@ -11,6 +11,7 @@ public class Behavior {
 	public int objectFinalSprite;
 	public int initialSound;
 	public int finalSound;
+	public int instructionSound;
 	
 	public boolean haveFinalBackground = false;
 	public boolean haveObject = false;
@@ -29,6 +30,7 @@ public class Behavior {
 		initialSound = findObjectInitialSound(type);
 		finalSound = findObjectFinalSound(type);
 		finalBackground = findFinalBackground(type);
+		instructionSound = findInstructionSound(type);
 		
 		/*
 		 * Behavior Definitions		Theme		Action
@@ -201,6 +203,22 @@ public class Behavior {
 		else
 			return 0;
 		}
+	
+	public int findInstructionSound(int t)
+	{
+		if(behaviorType == 0)		
+			return R.raw.tapnowsound;
+		else if(behaviorType == 1)
+			return R.raw.scrollnowsound;
+		else if(behaviorType == 2)
+			return R.raw.shakeitsound;
+		else if (behaviorType == 3)
+			return R.raw.moveleftsound;
+		else if (behaviorType == 4)
+			return R.raw.moverightsound;
+		else
+			return 0;
+	}
 	
 	public int findFinalBackground(int t){
 		if(t == 0)

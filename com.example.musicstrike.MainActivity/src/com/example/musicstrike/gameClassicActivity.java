@@ -58,6 +58,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private MediaPlayer playerBase2;
 	private MediaPlayer player2;
 	private MediaPlayer player3;
+	private MediaPlayer instructionPlayer;
 	private int indexMediaPlayer = 0, indexMediaPlayerBase = 0;
 	
 	private float pitch;
@@ -74,6 +75,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 	private ImageView objectView = null;
 	private Behavior behavior;
 	private boolean alreadyWin = false;
+	private int roundsCounter = 0;
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -120,13 +122,16 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
+        instructionPlayer = MediaPlayer.create(this, R.raw.winsound);
 
         player2.setVolume(100, 100);
         player3.setVolume(100, 100);
+        instructionPlayer.setVolume(100, 100);
         
         try {
         	player3.prepare();
 			player2.prepare();
+			instructionPlayer.prepare();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,7 +174,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				ImageView vh = (ImageView) findViewById(R.id.victoryHands);
 				vh.setVisibility(View.INVISIBLE);
 				
-				prepareSounds(behavior.finalSound, R.raw.compastempo120b);
+				prepareLevelSounds();
 				playBaseSound();
 				
 				/*
@@ -299,6 +304,9 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 							
 						
 				}
+				
+				roundsCounter++;
+				
 				if(dalomismo)
 					handler.postDelayed(this, 2000);
 			}
@@ -357,6 +365,8 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
                 player2.release();
                 player3.reset();
                 player3.release();
+                instructionPlayer.reset();
+                instructionPlayer.release();
                 dalomismo = false;
                 stopService(getIntent());
                 finish();
@@ -573,6 +583,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
         //player2.reset();
         player2.release();
         player3.release();
+        instructionPlayer.release();
         try {
 			saveHighScore() ;
 		} catch (IOException e) {
@@ -702,7 +713,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 		
 	}
 	
-	private void prepareSounds(int finalSound, int baseSound){
+	private void prepareSounds(int instructionSound, int finalSound, int baseSound){
 		
 		if(indexMediaPlayer == 0){
 			
@@ -766,8 +777,28 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 				}
 				
 			}
+		
+		instructionPlayer.release();
+		instructionPlayer = MediaPlayer.create(gameClassicActivity.this, instructionSound);
+		try {
+			instructionPlayer.prepare();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 	
+	}
+	
+	private void prepareLevelSounds()
+	{
+		//if (roundsCounter < 10)
+			prepareSounds(behavior.instructionSound, behavior.finalSound, R.raw.compastempo120b);
+		//else
+			//prepareSounds(behavior.finalSound, R.raw.compastempo125d);
 	}
 	
 	private void playFinalSound(){
@@ -789,6 +820,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener, 
 			playerBase2.start();
 			indexMediaPlayerBase--;	
 		}
+		instructionPlayer.start();
 	}
 	
 
