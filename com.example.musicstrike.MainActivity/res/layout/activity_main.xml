@@ -1,36 +1,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundhome" >
 
-    
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/theme1" />
-
-    
-
-    <ImageView
-        android:id="@+id/imageView1"
+    <ImageButton
+        android:id="@+id/imagePlayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/front2" />
-
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/play_button" />
+
+    <ImageView
+        android:id="@+id/fly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="39dp"
+        android:layout_toLeftOf="@+id/imagePlayButton"
+        android:src="@drawable/fly" />
+
+    <ImageView
+        android:id="@+id/footballPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imagePlayButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="31dp"
+        android:src="@drawable/pasar02" />
+
+    <ImageView
+        android:id="@+id/musicStrike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footballPlayer"
+        android:layout_alignRight="@+id/imagePlayButton"
+        android:layout_marginBottom="68dp"
+        android:src="@drawable/musicstrike" />
     
 </RelativeLayout>

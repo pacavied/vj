@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,39 +32,25 @@ public class MainActivity extends Activity {
         //GifMovieView view = new GifMovieView(this, "file:///android_asset/homescreen3.gif");
         //setContentView(view);
         
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);       
         
-        final ImageView switcherView = (ImageView) this.findViewById(R.id.img);
-        switcherView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View arg0, MotionEvent event) {
-
-                float curX, curY;
-
-                switch (event.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        mx = event.getX();
-                        my = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        //curX = event.getX();
-                        curY = event.getY();
-                        switcherView.scrollBy((int) (0), (int) (my - curY));
-                        //mx = curX;
-                        my = curY;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        //curX = event.getX();
-                        curY = event.getY();
-                        switcherView.scrollBy((int) (0), (int) (my - curY));
-                        break;
-                }
-
-                return true;
-            }
-        });
-        
-        ImageButton bib = (ImageButton) findViewById(R.id.imageButton1);
+		ImageView footballPlayer = (ImageView) findViewById(R.id.footballPlayer);
+		footballPlayer.setVisibility(View.VISIBLE);
+		footballPlayer.bringToFront();
+		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+		shake.setRepeatCount(-1);
+		shake.setRepeatMode(2);
+		footballPlayer.startAnimation(shake);
+		
+		ImageView musicStrike = (ImageView) findViewById(R.id.musicStrike);
+		musicStrike.setVisibility(View.VISIBLE);
+		musicStrike.bringToFront();
+		shake.setRepeatCount(2);
+		shake.setRepeatMode(2);
+		Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_animation);
+		musicStrike.startAnimation(rotate);
+       
+        ImageButton bib = (ImageButton) findViewById(R.id.imagePlayButton);
         bib.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {

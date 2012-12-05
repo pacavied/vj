@@ -17,7 +17,7 @@ public class Behavior {
 	public boolean haveObject = false;
 	
 	//Numero de acciones maximas
-	private int randomLimit = 10;
+	private int randomLimit = 11;
 	
 	
 	public Behavior(){
@@ -45,6 +45,7 @@ public class Behavior {
 		 * 7 -> Evade Football Player Left		Football	LEFT
 		 * 8 -> Evade Football Player Right		Football	RIGHT
 		 * 9 -> Penalty Kick					Football	TAP
+		 * 10 -> Free Kick						Football	SCROLL
 		 * 
 		*/
 		
@@ -72,7 +73,7 @@ public class Behavior {
 			return 1;
 		else if (t == 4)
 			return 2;
-		else if(t == 0)
+		else if(t == 5)
 			return 0;			
 		else if (t == 6)
 			return 4;
@@ -80,6 +81,10 @@ public class Behavior {
 			return 3;
 		else if(t == 8)
 			return 4;
+		else if(t == 9)
+			return 0;
+		else if(t == 10)
+			return 1;
 		else 
 			return 0;
 		
@@ -107,6 +112,8 @@ public class Behavior {
 			return R.drawable.backevaderight;
 		else if(t == 9)
 			return R.drawable.initialpenalty;
+		else if(t == 10)
+			return R.drawable.initialfreekick;
 		
 		else
 			return 0;
@@ -160,6 +167,16 @@ public class Behavior {
 			haveObject = false;
 			return 0;		
 		}
+		else if(t == 9)
+		{
+			haveObject = false;
+			return 0;		
+		}
+		else if(t == 10)
+		{
+			haveObject = false;
+			return 0;		
+		}
 		
 		else
 			return 0;
@@ -184,6 +201,10 @@ public class Behavior {
 		else if (t == 7)
 			return 0;
 		else if (t == 8)
+			return 0;
+		else if (t == 9)
+			return 0;
+		else if (t == 10)
 			return 0;
 					
 		else
@@ -210,6 +231,10 @@ public class Behavior {
 			return R.raw.run;
 		else if (t == 8)
 			return R.raw.run;
+		else if (t == 9)
+			return R.raw.run;
+		else if (t == 10)
+			return R.raw.run;
 					
 		else
 			return 0;
@@ -235,6 +260,10 @@ public class Behavior {
 			return R.raw.evadefinal;
 		else if(t == 8)		
 			return R.raw.evadefinal;
+		else if(t == 9)		
+			return R.raw.futbolpegada;
+		else if(t == 10)		
+			return R.raw.futbolpegada;
 		else
 			return 0;
 		}
@@ -301,7 +330,16 @@ public class Behavior {
 			haveFinalBackground = true;
 			return R.drawable.backevaderightfinal;
 		}
-		
+		else if(t == 9)
+		{
+			haveFinalBackground = true;
+			return R.drawable.finalpenalty;
+		}
+		else if(t == 10)
+		{
+			haveFinalBackground = true;
+			return R.drawable.finalfreekick;
+		}
 		else
 			return 0;
 	}
