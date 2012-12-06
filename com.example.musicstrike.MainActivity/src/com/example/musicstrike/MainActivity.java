@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
 			
 			public void onClick(View v) {
 							
-				
-				Intent intent = new Intent(MainActivity.this,gameClassicActivity.class);
+				overridePendingTransition(R.anim.fadeout, R.anim.fadein);
+				Intent intent = new Intent(MainActivity.this,InitialCountDownActivity.class);
 				startActivity(intent);
 				
 			}
