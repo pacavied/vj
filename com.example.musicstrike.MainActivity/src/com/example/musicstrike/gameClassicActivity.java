@@ -174,7 +174,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
 				
 				
-				behavior = new Behavior();
+				if(roundsCounter == 0)
+					behavior = new Behavior(0);
+				else
+					behavior = new Behavior();
 				
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.gameClassic);
 				rl.setBackgroundResource(behavior.backgroundImage);
