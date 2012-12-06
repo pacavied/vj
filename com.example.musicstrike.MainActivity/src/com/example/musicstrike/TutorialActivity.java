@@ -29,9 +29,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +51,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private boolean alreadyWin = false;
 	private int objectID = -1;
 	private boolean stopRunnable = false;
+	private boolean wrongMovement = false;
 	
 	/* Orden Tutorial:
 	 * TAP
@@ -90,12 +89,9 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	    mAccel = 0.00f;
 	    mAccelCurrent = SensorManager.GRAVITY_EARTH;
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
-	    pitch = 0;
+	    pitch = 0;    
 
-		
-	    
-
-		behavior = new Behavior(0);
+		behavior = new Behavior(0); // TAP
 		
 		// "While" principal
 		final Handler handler = new Handler();
@@ -269,7 +265,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 				shake = false;
 				moveLeft = true;
-				behavior = new Behavior(1);
+				behavior = new Behavior(1); // LEFT
 				
 			}
 			
@@ -305,7 +301,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 				moveLeft = false;
 				moveRight = true;
-				behavior = new Behavior(6);
+				behavior = new Behavior(6); // RIGHT
 			}	
 
 			else if (pitch > 3 && (!shake && !moveLeft) ) // Left y Right se confunden con shake a veces. 
@@ -329,7 +325,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			alreadyWin = true;
 			tap = false;
 			scroll = true;
-			behavior = new Behavior(3);
+			behavior = new Behavior(3); // SCROLL
 			
 		} 
 		else 
@@ -349,7 +345,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			alreadyWin = true;
 			scroll = false;
 			shake = true;
-			behavior = new Behavior(2);
+			behavior = new Behavior(2); // SHAKE
 			//scroll = false;
 		}
 		else
@@ -400,6 +396,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	public void wrongMovement()
 	{
 		// TRY AGAIN MESSAGE
+		TextView tv = (TextView) findViewById(R.id.textView1);		
+		tv.setTextColor(Color.GREEN);
+		tv.setTextSize(80);
+		tv.setGravity(Gravity.CENTER);
+		tv.setText("Wrong. Try Again!");	
 	}
 	
 	
