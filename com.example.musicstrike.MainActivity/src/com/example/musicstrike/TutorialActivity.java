@@ -31,6 +31,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private int objectID = -1;
 	private boolean stopRunnable = false;
 	private boolean wrongMovement = false;
-	
+	private int roundsCounter = 0;
 	/* Orden Tutorial:
 	 * TAP
 	 * SCROLL
@@ -100,6 +101,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			public void run() {
 
 				Log.v("Start","Empieza vuelta");
+				
+				if (alreadyWin == false && roundsCounter != 0)
+					wrongMovement();
+				
 					
 				scroll=false;shake=false;moveRight=false;moveLeft=false;tap = false;				
 				alreadyWin = false;	
@@ -227,6 +232,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 							
 						
 				}
+				roundsCounter++;
+				
 				if (!stopRunnable)
 					handler.postDelayed(this, 2000);
 			}
@@ -234,7 +241,18 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 	}
 	
-	
+	// Metodo que borra vista tras X segundos
+	public void waitAndClose(int ms, final RelativeLayout layout, final TextView tv) 
+	{
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() 
+		{
+			public void run() 
+			{
+				layout.removeView(tv);
+			}
+		}, ms);
+	}
 
     @Override
 	public boolean onTouchEvent(MotionEvent me) {
@@ -396,11 +414,12 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	public void wrongMovement()
 	{
 		// TRY AGAIN MESSAGE
-		TextView tv = (TextView) findViewById(R.id.textView1);		
+		/*TextView tv = (TextView) findViewById(R.id.textView2);		
 		tv.setTextColor(Color.GREEN);
 		tv.setTextSize(80);
-		tv.setGravity(Gravity.CENTER);
+		tv.setGravity(Gravity.TOP);
 		tv.setText("Wrong. Try Again!");	
+		waitAndClose(600,(RelativeLayout) findViewById(R.id.tutorial), tv);*/
 	}
 	
 	
