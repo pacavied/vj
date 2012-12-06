@@ -75,7 +75,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private float mAccel; // acceleration apart from gravity
 	private float mAccelCurrent; // current acceleration including gravity
 	private float mAccelLast; // last acceleration including gravity
-	private boolean monitorBool, dalomismo = true;	
+	private boolean monitorBool, continueRunnable = true;	
 	private int currentScore = 0;
 	private int highscore = 0;
 	private int objectID = -1;
@@ -300,7 +300,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				roundsCounter++;
 				level.IncreaseCounter();
 				
-				if(dalomismo)
+				if(continueRunnable)
 					handler.postDelayed(this, level.roundTime);
 			}
 		});      
@@ -320,7 +320,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
                 player3.release();
                 instructionPlayer.reset();
                 instructionPlayer.release();
-                dalomismo = false;
+                continueRunnable = false;
                 loseGame = true;
                 stopService(getIntent());
                 finish();
@@ -531,7 +531,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	
 	private void lose()
 	{
-		if(dalomismo){
+		if(continueRunnable){
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText("Wrong!");
 		monitorBool = true;
@@ -551,7 +551,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        dalomismo = false;
+        continueRunnable = false;
         stopService(getIntent());
        
         finish();
@@ -761,9 +761,9 @@ if(indexMediaPlayer == 0){
 		handsPlayer.setOnVideoSizeChangedListener(this); 
 		handsPlayer.start();
 	}
-	private void playBaseSound(){
-		
-		
+	
+	
+	private void playBaseSound(){		
 		
 		if(loseGame == false){
 			

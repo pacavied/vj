@@ -28,6 +28,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +40,7 @@ public class TutorialActivity extends Activity implements OnGestureListener, OnP
 OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	
 	private MediaPlayer player;
+	private MediaPlayer soundPlayer;
 	private Behavior behavior;
 	private float pitch;
 	private boolean tap, scroll, moveRight, moveLeft, shake = false;
@@ -50,6 +52,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private ImageView objectView = null;
 	private boolean alreadyWin = false;
 	private int objectID = -1;
+	private boolean stopRunnable = false;
 	
 	/* Orden Tutorial:
 	 * TAP
@@ -60,6 +63,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	 * 
 	 */
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +74,14 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		player = MediaPlayer.create(this, R.raw.yeeee);
 		player.setVolume(100, 100);		
+		soundPlayer = MediaPlayer.create(this, R.raw.compastempo120b4seg);
+		soundPlayer.setVolume(100, 100);	
+		
+		
+		soundPlayer.setOnCompletionListener(this);
+		soundPlayer.setOnErrorListener(this);
+		soundPlayer.setOnPreparedListener(this);
+		soundPlayer.setOnVideoSizeChangedListener(this);
 		
         gestureScanner = new GestureDetector(this);
     	
@@ -92,14 +104,23 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			public void run() {
 
 				Log.v("Start","Empieza vuelta");
-				//if (alreadyWin == false && roundsCounter != 0)
-				//	lose();
 					
-				scroll=false;shake=false;moveRight=false;moveLeft=false;tap = false;
-				
+				scroll=false;shake=false;moveRight=false;moveLeft=false;tap = false;				
 				alreadyWin = false;	
+				
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.tutorial);
-				rl.setBackgroundResource(behavior.backgroundImage);
+				rl.setBackgroundResource(behavior.backgroundImage);	
+				
+				if (!stopRunnable)
+				{
+					soundPlayer.release();
+					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.compastempo120b);
+					soundPlayer.setOnCompletionListener(TutorialActivity.this);
+					soundPlayer.setOnErrorListener(TutorialActivity.this);
+					soundPlayer.setOnPreparedListener(TutorialActivity.this);
+					soundPlayer.setOnVideoSizeChangedListener(TutorialActivity.this);
+					soundPlayer.start();
+				}
 				
 				
 				if(objectView != null)
@@ -210,14 +231,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 							
 						
 				}
-				
-				handler.postDelayed(this, 2000);
+				if (!stopRunnable)
+					handler.postDelayed(this, 2000);
 			}
-		});      
-        
-        
-	    
-	    
+		});           
 		
 	}
 	
@@ -266,8 +283,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			{
 				// FIN TUTORIAL
 				Log.v("Right","Right");
-				TextView tv = (TextView) findViewById(R.id.textView1);
-				tv.setText("Moved right!");
 				if(!alreadyWin){
 					updateSpritesAndBackgrounds();
 					}
@@ -282,9 +297,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			
 			if (pitch > 3 && moveLeft) //Left
 			{
-				
-				TextView tv = (TextView) findViewById(R.id.textView1);
-				tv.setText("Moved left!");
 				if(!alreadyWin){
 					updateSpritesAndBackgrounds();
 					}
@@ -311,8 +323,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		if (tap)
 		{
-			TextView tv = (TextView) findViewById(R.id.textView1);
-			tv.setText("Just on Time!");
 			if(!alreadyWin){
 			updateSpritesAndBackgrounds();
 			}
@@ -333,15 +343,13 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	{
 		if (scroll) 
 		{
-			TextView tv = (TextView) findViewById(R.id.textView1);
-			tv.setText("Scroll!");
 			if(!alreadyWin){	
 			updateSpritesAndBackgrounds();
 			}
 			alreadyWin = true;
 			scroll = false;
-			moveLeft = true;
-			behavior = new Behavior(1);
+			shake = true;
+			behavior = new Behavior(2);
 			//scroll = false;
 		}
 		else
@@ -378,14 +386,13 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
-			iv.setImageResource(behavior.objectFinalSprite);
+			iv.setImageResource(behavior.objectFinalSprite);			
 		}
 		
 		if(behavior.haveFinalBackground){
 			RelativeLayout rl = (RelativeLayout) findViewById(R.id.tutorial);
 			rl.setBackgroundResource(behavior.finalBackground);
 		}
-		
 		
 		
 	}
@@ -398,22 +405,40 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	
 	private void playFinalSound(){
 		
-		player.release();
-		player = MediaPlayer.create(TutorialActivity.this, R.raw.yeeee);
-		player.setOnCompletionListener(this);
-		player.setOnErrorListener(this);
-		player.setOnPreparedListener(this);
-		player.setOnVideoSizeChangedListener(this); 
-		player.start();
+		if (!stopRunnable)
+		{
+			player.release();
+			player = MediaPlayer.create(TutorialActivity.this, R.raw.yeeee);
+			player.setOnCompletionListener(this);
+			player.setOnErrorListener(this);
+			player.setOnPreparedListener(this);
+			player.setOnVideoSizeChangedListener(this); 
+			player.start();
+		}
 		
 	}
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        		stopRunnable = true;
+                player.reset();
+                player.release();
+                soundPlayer.reset();
+                soundPlayer.release();
+                stopService(getIntent());
+                finish();
+                
+                return false;
+        }
+    return super.onKeyDown(keyCode, event);
+}
 
 
 	public boolean onDown(MotionEvent arg0) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
