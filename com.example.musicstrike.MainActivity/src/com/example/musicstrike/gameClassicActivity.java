@@ -84,6 +84,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private boolean alreadyWin = false;
 	private int roundsCounter = 0;
 	private boolean loseGame = false;
+	private Level level = new Level();
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -297,10 +298,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				}
 				
 				roundsCounter++;
-				
+				level.IncreaseCounter();
 				
 				if(dalomismo)
-					handler.postDelayed(this, 2000);
+					handler.postDelayed(this, level.roundTime);
 			}
 		});      
         
@@ -320,8 +321,10 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
                 instructionPlayer.reset();
                 instructionPlayer.release();
                 dalomismo = false;
+                loseGame = true;
                 stopService(getIntent());
                 finish();
+                
                 return false;
         }
     return super.onKeyDown(keyCode, event);
@@ -688,37 +691,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	
 	private void prepareSounds(int instructionSound, int initialSound, int finalSound, int baseSound){
 		
-		if(indexMediaPlayer == 0){
-			
-			player2.release();
-			player2 = MediaPlayer.create(gameClassicActivity.this, finalSound);
-			player2.setOnCompletionListener(this);
-			player2.setOnErrorListener(this);
-			player2.setOnPreparedListener(this);
-			player2.setOnVideoSizeChangedListener(this);
-			
-			
-		}
-		else{
-			
-			player3.release();
-			player3 = MediaPlayer.create(gameClassicActivity.this, finalSound);
-			player3.setOnCompletionListener(this);
-			player3.setOnErrorListener(this);
-			player3.setOnPreparedListener(this);
-			player3.setOnVideoSizeChangedListener(this);
-			
-		}
 		
-		if(loseGame == false)
-			playerBase1.seekTo(0);
+		
+		
 	
-//				playerBase1.release();
-//				playerBase1 = MediaPlayer.create(gameClassicActivity.this, baseSound);
-//				playerBase1.setOnCompletionListener(this);
-//				playerBase1.setOnErrorListener(this);
-//				playerBase1.setOnPreparedListener(this);
-//				playerBase1.setOnVideoSizeChangedListener(this);
+				
 							
 			
 			
@@ -744,20 +721,38 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private void prepareLevelSounds()
 	{
 		//if (roundsCounter < 10)
-			prepareSounds(behavior.instructionSound, behavior.initialSound, behavior.finalSound, R.raw.compastempo120b);
+			prepareSounds(behavior.instructionSound, behavior.initialSound, behavior.finalSound, level.roundTime);
 		//else
 			//prepareSounds(behavior.finalSound, R.raw.compastempo125d);
 	}
 	
 	private void playFinalSound(){
-		if(indexMediaPlayer == 0){
+		
+if(indexMediaPlayer == 0){
+			
+			player2.release();
+			player2 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			player2.setOnCompletionListener(this);
+			player2.setOnErrorListener(this);
+			player2.setOnPreparedListener(this);
+			player2.setOnVideoSizeChangedListener(this);
 			player2.start();
 			indexMediaPlayer++;
+			
 		}
 		else{
+			
+			player3.release();
+			player3 = MediaPlayer.create(gameClassicActivity.this, behavior.finalSound);
+			player3.setOnCompletionListener(this);
+			player3.setOnErrorListener(this);
+			player3.setOnPreparedListener(this);
+			player3.setOnVideoSizeChangedListener(this);
 			player3.start();
 			indexMediaPlayer--;	
 		}
+		
+		
 		handsPlayer.release();
 		handsPlayer = MediaPlayer.create(gameClassicActivity.this, R.raw.yeeee);
 		handsPlayer.setOnCompletionListener(this);
@@ -768,11 +763,19 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	}
 	private void playBaseSound(){
 		
-		if(roundsCounter == 0)
-			playerBase1.start();
 		
 		
 		if(loseGame == false){
+			
+		playerBase1.release();
+		playerBase1 = MediaPlayer.create(gameClassicActivity.this, R.raw.compastempo120b);
+		playerBase1.setOnCompletionListener(this);
+		playerBase1.setOnErrorListener(this);
+		playerBase1.setOnPreparedListener(this);
+		playerBase1.setOnVideoSizeChangedListener(this);
+		playerBase1.start();
+			
+			
 		instructionPlayer.start();
 		
 		initialPlayer.start();
