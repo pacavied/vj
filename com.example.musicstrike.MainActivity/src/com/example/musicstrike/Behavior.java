@@ -51,6 +51,7 @@ public class Behavior {
 		
 	}
 	
+	//Utilizado para el tutorial
 	public Behavior(int type){
 		
 		behaviorType = findBehaviorType(type);
