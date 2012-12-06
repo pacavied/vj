@@ -40,5 +40,13 @@
         android:layout_alignRight="@+id/imagePlayButton"
         android:layout_marginBottom="68dp"
         android:src="@drawable/musicstrike" />
+
+    <Button
+        android:id="@+id/tutorialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Tutorial" />
     
 </RelativeLayout>

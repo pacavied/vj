@@ -51,6 +51,19 @@ public class Behavior {
 		
 	}
 	
+	public Behavior(int type){
+		
+		behaviorType = findBehaviorType(type);
+		backgroundImage = findBackgroundImage(type);
+		objectInitialSprite = findObjectInitialSprite(type);
+		objectFinalSprite = findObjectFinalSprite(type);
+		initialSound = findObjectInitialSound(type);
+		finalSound = findObjectFinalSound(type);
+		finalBackground = findFinalBackground(type);
+		instructionSound = findInstructionSound(type);
+		
+	}
+	
 	public int findBehaviorType(int t){
 		
 		/*
