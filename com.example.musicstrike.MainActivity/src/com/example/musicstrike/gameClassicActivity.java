@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.nio.channels.AlreadyConnectedException;
 import java.util.Timer;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -43,6 +44,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -57,7 +59,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class gameClassicActivity extends Activity implements OnGestureListener, OnPreparedListener,
+public class gameClassicActivity extends Activity implements  OnGestureListener,OnPreparedListener,
 OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 	private MediaPlayer playerBase1;
@@ -84,6 +86,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private boolean alreadyWin = false;
 	private int roundsCounter = 0;
 	private boolean loseGame = false;
+	private int tapCounter = 0;
 	private Level level = new Level();
 	
     @SuppressWarnings("deprecation")
@@ -171,7 +174,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 					
 					
 				alreadyWin = false;
-				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;
+				tap = false;scroll=false;shake=false;moveRight=false;moveLeft=false;tapCounter = 0;
 				
 				
 				if(roundsCounter == 0)
@@ -201,26 +204,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				if(objectView != null)
 					rl.removeView(objectView);
 				
-				if(behavior.haveObject){
-					
-					
-					
-					objectView = new ImageView(gameClassicActivity.this);
-					objectView.setId(9857);
-					objectID = objectView.getId();
-					
-					objectView.setImageResource(behavior.objectInitialSprite);
-					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-					        RelativeLayout.LayoutParams.WRAP_CONTENT,
-					        RelativeLayout.LayoutParams.WRAP_CONTENT);
-					lp.addRule(RelativeLayout.CENTER_VERTICAL);
-					lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-					/*lp.leftMargin = 100;
-					lp.topMargin = 100;
-					*/
-					rl.addView(objectView, lp);
-					
-				}
+				
 				
 	            
 	            
@@ -305,6 +289,61 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 						Log.v("RIGHT", "Right Now");
 							
 						
+				}
+				
+if(behavior.haveObject){
+					
+					
+					
+					objectView = new ImageView(gameClassicActivity.this);
+					objectView.setId(9857);
+					objectID = objectView.getId();
+					
+					objectView.setImageResource(behavior.objectInitialSprite);
+					
+					RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+					        RelativeLayout.LayoutParams.WRAP_CONTENT,
+					        RelativeLayout.LayoutParams.WRAP_CONTENT);
+					lp.addRule(RelativeLayout.CENTER_VERTICAL);
+					lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+					
+					if(tap){
+						
+						objectView.setOnTouchListener(new OnTouchListener() {
+							public boolean onTouch(View v, MotionEvent event) {
+								
+								Log.v("Tap","Touch event");	
+								Log.v("Tap",""+event.getAction());
+								
+								if (tap && MotionEvent.ACTION_DOWN == event.getAction() && tapCounter == 0)
+								{
+									Log.v("Tap","Aprete por primera vez");
+									TextView tv = (TextView) findViewById(R.id.textView1);
+									tv.setText("Just on Time!");
+									if(!alreadyWin){
+									updateSpritesAndBackgrounds();
+									refreshHighScore();
+									}
+									alreadyWin = true;
+									//tap = false;
+									tapCounter++;
+								} 
+								else if(MotionEvent.ACTION_DOWN == event.getAction() && tapCounter == 2)
+								{
+									Log.v("Tap","Perdi");
+									lose();
+								}
+								
+								return false;
+							}
+						});
+						
+						
+					}
+					
+					
+					rl.addView(objectView, lp);
+					
 				}
 				
 				roundsCounter++;
@@ -410,12 +449,14 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         vh.bringToFront();
 		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         vh.startAnimation(shake);
-        
+ 
         playFinalSound();
 
 		if(behavior.haveObject && objectID != -1){
 			ImageView iv = (ImageView) findViewById(objectID);
 			iv.setImageResource(behavior.objectFinalSprite);
+			
+			
 		}
 		
 		if(behavior.haveFinalBackground){
@@ -427,29 +468,29 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 	}
 
-	public boolean onSingleTapUp(MotionEvent e) 
-	{
-		
-		
-		//if (tap && e.getRawX() - iv.getWidth()/2 < iv.getLeft() && e.getRawX() + iv.getWidth()/2 > iv.getLeft() ) 
-		if (tap)
-		{
-			TextView tv = (TextView) findViewById(R.id.textView1);
-			tv.setText("Just on Time!");
-			if(!alreadyWin){
-			updateSpritesAndBackgrounds();
-			refreshHighScore();
-			}
-			alreadyWin = true;
-			tap = false;
-			
-		} 
-		else 
-		{
-			lose();
-		}
-		return true;
-	}
+//	public boolean onSingleTapUp(MotionEvent e) 
+//	{
+//		
+//		
+//		//if (tap && e.getRawX() - iv.getWidth()/2 < iv.getLeft() && e.getRawX() + iv.getWidth()/2 > iv.getLeft() ) 
+//		if (tap)
+//		{
+//			TextView tv = (TextView) findViewById(R.id.textView1);
+//			tv.setText("Just on Time!");
+//			if(!alreadyWin){
+//			updateSpritesAndBackgrounds();
+//			refreshHighScore();
+//			}
+//			alreadyWin = true;
+//			tap = false;
+//			
+//		} 
+//		else 
+//		{
+//			lose();
+//		}
+//		return true;
+//	}
 
 	private final SensorEventListener mSensorListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent se) {
@@ -815,6 +856,14 @@ if(indexMediaPlayer == 0){
 	public void onCompletion(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean onSingleTapUp(MotionEvent e) {
+		if(!tap){
+			Log.v("Tap","Perdiste por tapear en lugar equivocado");
+			lose();
+		}
+		return false;
 	}
 	
 }
