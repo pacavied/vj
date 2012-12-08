@@ -103,7 +103,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			e1.printStackTrace();
 		}
         
-        playerBase1 = MediaPlayer.create(this, R.raw.compastempo120b4seg);
+        playerBase1 = MediaPlayer.create(this, R.raw.tempo120);
         player2 = MediaPlayer.create(this, R.raw.winsound);
         player3 = MediaPlayer.create(this, R.raw.winsound);
         instructionPlayer = MediaPlayer.create(this, R.raw.winsound);
@@ -771,7 +771,7 @@ if(indexMediaPlayer == 0){
 		if(loseGame == false){
 			
 		playerBase1.release();
-		playerBase1 = MediaPlayer.create(gameClassicActivity.this, R.raw.compastempo120b);
+		playerBase1 = MediaPlayer.create(gameClassicActivity.this, level.backgroundMusic);
 		playerBase1.setOnCompletionListener(this);
 		playerBase1.setOnErrorListener(this);
 		playerBase1.setOnPreparedListener(this);
