@@ -78,7 +78,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		player = MediaPlayer.create(this, R.raw.yeeee);
 		player.setVolume(100, 100);		
-		soundPlayer = MediaPlayer.create(this, R.raw.compastempo120b4seg);
+		soundPlayer = MediaPlayer.create(this, R.raw.tempo120);
 		soundPlayer.setVolume(100, 100);	
 		
 		
@@ -119,7 +119,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				if (!stopRunnable)
 				{
 					soundPlayer.release();
-					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.compastempo120b);
+					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.tempo120);
 					soundPlayer.setOnCompletionListener(TutorialActivity.this);
 					soundPlayer.setOnErrorListener(TutorialActivity.this);
 					soundPlayer.setOnPreparedListener(TutorialActivity.this);
