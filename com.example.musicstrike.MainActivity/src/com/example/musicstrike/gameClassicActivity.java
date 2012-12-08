@@ -186,8 +186,15 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				vh.setVisibility(View.INVISIBLE);
 				
 				prepareLevelSounds();
-				playBaseSound();
 				
+				if (roundsCounter % 10 == 0)
+					playBaseSound();
+				
+				if (loseGame == false)
+				{
+					instructionPlayer.start();
+					initialPlayer.start();
+				}
 				
 				
 				
@@ -648,7 +655,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		    fileContent.append(new String(buffer));
 		}*/
 		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
-		int score = prefs.getInt("key", 0); //0 is the default value		
+		int score = prefs.getInt("HighScore", 0); //0 is the default value		
 		return score;
 	}
 	
@@ -678,7 +685,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
 		Editor editor = prefs.edit();
-		editor.putInt("key", Integer.parseInt(scoreToSave));
+		editor.putInt("HighScore", Integer.parseInt(scoreToSave));
+		editor.putInt("FirstTime", 1);
 		editor.commit();
 		
 		
@@ -771,7 +779,7 @@ if(indexMediaPlayer == 0){
 		if(loseGame == false){
 			
 		playerBase1.release();
-		playerBase1 = MediaPlayer.create(gameClassicActivity.this, R.raw.compastempo120b);
+		playerBase1 = MediaPlayer.create(gameClassicActivity.this, R.raw.compastempo120_20s);
 		playerBase1.setOnCompletionListener(this);
 		playerBase1.setOnErrorListener(this);
 		playerBase1.setOnPreparedListener(this);
@@ -779,9 +787,9 @@ if(indexMediaPlayer == 0){
 		playerBase1.start();
 			
 			
-		instructionPlayer.start();
+		//instructionPlayer.start();
 		
-		initialPlayer.start();
+		//initialPlayer.start();
 		}
 	}
 

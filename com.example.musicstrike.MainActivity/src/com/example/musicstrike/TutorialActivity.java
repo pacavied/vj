@@ -5,7 +5,11 @@ import com.example.musicstrike.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -302,6 +306,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 					}
 				alreadyWin = true;
 				
+				EndTutorial();
+				
 			}
 			else if (pitch < -3 && (!shake && !moveRight) ) // Left y Right se confunden con shake a veces. 
 			{
@@ -439,20 +445,34 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	}
 	
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-        		stopRunnable = true;
-                player.reset();
-                player.release();
-                soundPlayer.reset();
-                soundPlayer.release();
-                stopService(getIntent());
-                finish();
-                
-                return false;
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK) 
+        {
+        	stopRunnable = true;
+            player.release();
+            soundPlayer.release();
+            stopService(getIntent());
+            finish();            
+            return false;
         }
     return super.onKeyDown(keyCode, event);
-}
+    }
+    
+    public void EndTutorial()
+    {
+		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+		Editor editor = prefs.edit();
+		editor.putInt("FirstTime", 1);
+		editor.commit();
+    	stopRunnable = true;
+        player.release();
+        soundPlayer.release();
+        stopService(getIntent());
+        finish();
+        Intent intent = new Intent(TutorialActivity.this, TutorialScreens.class);
+        startActivity(intent);
+    }
 
 
 	public boolean onDown(MotionEvent arg0) {

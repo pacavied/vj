@@ -49,6 +49,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.musicstrike.MainActivity" />
         </activity>
+        <activity
+            android:name=".TutorialScreens"
+            android:label="@string/title_activity_game_classic" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.musicstrike.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

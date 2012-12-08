@@ -3,7 +3,9 @@ package com.example.musicstrike;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,9 +56,15 @@ public class MainActivity extends Activity {
         bib.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-							
-				overridePendingTransition(R.anim.fadeout, R.anim.fadein);
-				Intent intent = new Intent(MainActivity.this,InitialCountDownActivity.class);
+						
+				Intent intent;
+				if (IsFirstTimePlay())
+					intent = new Intent(MainActivity.this, TutorialActivity.class);
+				else
+				{
+					overridePendingTransition(R.anim.fadeout, R.anim.fadein);
+					intent = new Intent(MainActivity.this,InitialCountDownActivity.class);
+				}
 				startActivity(intent);
 				
 			}
@@ -81,9 +89,19 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         
         
-        return true;
-        
+        return true;       
         
     }
+    
+    private boolean IsFirstTimePlay()
+    {
+		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+		int ft = prefs.getInt("FirstTime", 0); //0 is the default value		
+		
+		if (ft == 0)
+			return true;
+		
+		return false;
+	}
     
 }
