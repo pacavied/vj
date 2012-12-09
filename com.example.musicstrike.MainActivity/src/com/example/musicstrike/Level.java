@@ -21,6 +21,8 @@ public class Level {
 	 *  130		   1846			  7
 	 *  135		   1778			  8
 	 *  140		   1714			  9
+	 *  145		   1655			  10
+	 *  150		   1600			  11
 	 * 
 	*/
 	
@@ -80,6 +82,27 @@ public class Level {
 		{
 			backgroundMusic = R.raw.tempo130;
 			roundTime = 1846;
+		}
+
+		else if (actualLevel == 8)
+		{
+			backgroundMusic = R.raw.tempo135;
+			roundTime = 1778;
+		}
+		else if (actualLevel == 9)
+		{
+			backgroundMusic = R.raw.tempo140;
+			roundTime = 1714;
+		}
+		else if (actualLevel == 10)
+		{
+			backgroundMusic = R.raw.tempo145;
+			roundTime = 1655;
+		}
+		else if (actualLevel == 11)
+		{
+			backgroundMusic = R.raw.tempo150;
+			roundTime = 1600;
 		}
 		
 	}

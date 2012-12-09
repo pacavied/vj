@@ -44,7 +44,7 @@ public class Behavior {
 		 * 6 -> Overtake Right					Normal		RIGHT
 		 * 7 -> Evade Football Player Left		Football	LEFT
 		 * 8 -> Evade Football Player Right		Football	RIGHT
-		 * 9 -> Penalty Kick					Football	TAP
+		 * 9 -> Penalty Kick					Football	SCROLL
 		 * 10 -> Free Kick						Football	SCROLL
 		 * 
 		*/
@@ -96,7 +96,7 @@ public class Behavior {
 		else if(t == 8)
 			return 4;
 		else if(t == 9)
-			return 0;
+			return 1;
 		else if(t == 10)
 			return 1;
 		else 
