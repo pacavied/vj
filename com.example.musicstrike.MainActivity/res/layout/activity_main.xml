@@ -4,16 +4,16 @@
     android:id="@+id/menuBackgroundImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundhome" >
-    
-    
-    <ImageView
-	android:id="@+id/myanimation"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:src="@anim/menu_layout"
-	/>
+    android:background="#FFFFFF" >
 	
+    
+     <ImageView
+        android:id="@+id/animatedStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:src="@anim/menu_layout" />
 
     <ImageButton
         android:id="@+id/imagePlayButton"
@@ -24,23 +24,7 @@
         android:background="@android:color/transparent"
         android:src="@drawable/play_button" />
 
-    <ImageView
-        android:id="@+id/fly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="39dp"
-        android:layout_toLeftOf="@+id/imagePlayButton"
-        android:src="@drawable/fly" />
-
-    <ImageView
-        android:id="@+id/footballPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imagePlayButton"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="31dp"
-        android:src="@drawable/pasar02" />
+   
 
     <ImageView
         android:id="@+id/musicStrike"
@@ -56,5 +40,7 @@
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:src="@drawable/tutorial_button" />
+
+   
     
 </RelativeLayout>
