@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -38,6 +39,7 @@ public class InitialCountDownActivity extends Activity{
 					if(counter < 3){
 						
 						TextView tv = (TextView) findViewById(R.id.textViewCounter);
+						tv.setVisibility(View.INVISIBLE);
 						String countNumber = "0";
 						if(counter == 0)
 							countNumber = "3";
@@ -47,7 +49,11 @@ public class InitialCountDownActivity extends Activity{
 							countNumber = "1";
 						tv.setText(countNumber);
 						Log.v("CountDown","Conteo actual: "+countNumber);
-						animateTextView(tv);
+						//animateTextView(tv);
+						tv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(InitialCountDownActivity.this, R.anim.rotate_animation);
+						tv.startAnimation(rotate);
+						
 						counter++;
 						if(!stopRunnable)
 							handler.postDelayed(this, 1000);

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class loseWindowActivity extends Activity{
 	
@@ -19,8 +21,11 @@ public class loseWindowActivity extends Activity{
 	        Intent intent = getIntent();
 	        score = intent.getStringExtra(gameClassicActivity.SCORE_MESSAGE);
 	        setContentView(R.layout.lose_layout);
-	        	        
 	        
+	        
+	        TextView tv = (TextView) findViewById(R.id.scoreView);
+	        tv.setText("" + score);
+	       
 	        ImageButton goToMenu = (ImageButton) findViewById(R.id.goToMenuButton);
 	        goToMenu.setOnClickListener(new View.OnClickListener() {
 				
@@ -38,10 +43,11 @@ public class loseWindowActivity extends Activity{
 				public void onClick(View v) {
 								
 					finish();
-					Intent intent = new Intent(loseWindowActivity.this,gameClassicActivity.class);
+					Intent intent = new Intent(loseWindowActivity.this,InitialCountDownActivity.class);
 					startActivity(intent);
 				}
 			}); 
 	        
 	 }
+
 }

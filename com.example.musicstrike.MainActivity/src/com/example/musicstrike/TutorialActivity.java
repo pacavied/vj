@@ -450,7 +450,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         if (keyCode == KeyEvent.KEYCODE_BACK) 
         {
         	stopRunnable = true;
-            player.release();
+        	player.release();
             soundPlayer.release();
             stopService(getIntent());
             finish();            
@@ -517,5 +517,12 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	protected void onStop() {
+		mSensorManager.unregisterListener(mSensorListener);
+		super.onStop();
+	}
+
 
 }
