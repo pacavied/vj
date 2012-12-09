@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuBackgroundImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    android:background="@drawable/losescreensbutton" >
+
+    <ImageButton
+        android:id="@+id/goToMenuButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.51" >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="187dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/menu_button" />
 
-        <ImageButton
-            android:id="@+id/goToMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:src="@drawable/menu_button" />
+    <ImageView
+        android:id="@+id/scoreImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tryAgainButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/your_score" />
 
-        <ImageButton
-            android:id="@+id/tryAgainButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/goToMenuButton"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:src="@drawable/tryagain_button" />
+    <ImageButton
+        android:id="@+id/tryAgainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="39dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/tryagain_button" />
 
     </RelativeLayout>
-
-</LinearLayout>

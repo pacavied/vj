@@ -59,6 +59,8 @@ import android.widget.TextView;
 
 public class gameClassicActivity extends Activity implements OnGestureListener, OnPreparedListener,
 OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
+	
+	public final static String SCORE_MESSAGE = "Score";
 
 	private MediaPlayer playerBase1;
 	private MediaPlayer player2;
@@ -567,6 +569,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         finish();
         
         Intent intent = new Intent(gameClassicActivity.this,loseWindowActivity.class);
+        String message = String.valueOf(currentScore);
+        intent.putExtra(SCORE_MESSAGE, message);
 		startActivity(intent);
 		}
 	}

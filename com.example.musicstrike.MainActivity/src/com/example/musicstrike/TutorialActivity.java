@@ -78,7 +78,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		
 		player = MediaPlayer.create(this, R.raw.yeeee);
 		player.setVolume(100, 100);		
-		soundPlayer = MediaPlayer.create(this, R.raw.tempo120);
+		soundPlayer = MediaPlayer.create(this, R.raw.tempo100);
 		soundPlayer.setVolume(100, 100);	
 		
 		
@@ -119,7 +119,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				if (!stopRunnable)
 				{
 					soundPlayer.release();
-					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.tempo120);
+					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.tempo100);
 					soundPlayer.setOnCompletionListener(TutorialActivity.this);
 					soundPlayer.setOnErrorListener(TutorialActivity.this);
 					soundPlayer.setOnPreparedListener(TutorialActivity.this);
@@ -239,7 +239,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				roundsCounter++;
 				
 				if (!stopRunnable)
-					handler.postDelayed(this, 2000);
+					handler.postDelayed(this, 2400);
 			}
 		});           
 		

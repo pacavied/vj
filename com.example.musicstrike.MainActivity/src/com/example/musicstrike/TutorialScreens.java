@@ -30,7 +30,7 @@ public class TutorialScreens extends Activity{
 				}
 			});
 	        
-	        Button tutButton = (Button) findViewById(R.id.buttonMainMenu);
+	        ImageButton tutButton = (ImageButton) findViewById(R.id.goToMenuButton);
 	        tutButton.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {

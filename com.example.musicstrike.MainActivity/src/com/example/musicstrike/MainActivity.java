@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,12 +21,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
 	private float mx =0, my=0;
 	private float downX, downY;
+	private int count = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +43,57 @@ public class MainActivity extends Activity {
 		ImageView footballPlayer = (ImageView) findViewById(R.id.footballPlayer);
 		footballPlayer.setVisibility(View.VISIBLE);
 		footballPlayer.bringToFront();
-		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-		shake.setRepeatCount(-1);
-		shake.setRepeatMode(2);
-		footballPlayer.startAnimation(shake);
+		//Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+		//shake.setRepeatCount(-1);
+		//shake.setRepeatMode(2);
+		//footballPlayer.startAnimation(shake);
 		
 		ImageView musicStrike = (ImageView) findViewById(R.id.musicStrike);
 		musicStrike.setVisibility(View.VISIBLE);
 		musicStrike.bringToFront();
-		shake.setRepeatCount(2);
-		shake.setRepeatMode(2);
-		Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_animation);
-		musicStrike.startAnimation(rotate);
+		//shake.setRepeatCount(2);
+		//shake.setRepeatMode(2);
+		//Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_animation);
+		//musicStrike.startAnimation(rotate);
+		
+		/*final Handler handler = new Handler();
+		handler.post(new Runnable() {
+			@SuppressLint("ParserError")
+			public void run() {
+			
+			RelativeLayout rl = (RelativeLayout)findViewById(R.id.menuBackgroundImage);
+			if (count == 0)
+			rl.setBackgroundResource(R.drawable.menu_1);
+			if (count == 1)
+				rl.setBackgroundResource(R.drawable.menu_2);
+			if (count == 2)
+				rl.setBackgroundResource(R.drawable.menu_3);
+			if (count == 3)
+				rl.setBackgroundResource(R.drawable.menu_4);
+			if (count == 4)
+				rl.setBackgroundResource(R.drawable.menu_5);
+			if (count == 5)
+				rl.setBackgroundResource(R.drawable.menu_6);
+			if (count == 6)
+				rl.setBackgroundResource(R.drawable.menu_7);
+			
+			count++;
+			if (count == 7)
+				count = 0;
+			handler.postDelayed(this, 200);}
+		}); */
+		
+		/*ImageView myAnimation = (ImageView)findViewById(R.id.myanimation);
+		final AnimationDrawable myAnimationDrawable = (AnimationDrawable)myAnimation.getDrawable();
+
+		myAnimation.post(
+		new Runnable(){
+
+		  public void run() {
+		   myAnimationDrawable.start();
+		  }
+		});*/
+        
        
         ImageButton bib = (ImageButton) findViewById(R.id.imagePlayButton);
         bib.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +113,7 @@ public class MainActivity extends Activity {
 			}
 		});
         
-        Button tutButton = (Button) findViewById(R.id.tutorialButton);
+        ImageButton tutButton = (ImageButton) findViewById(R.id.tutorialButton);
         tutButton.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {

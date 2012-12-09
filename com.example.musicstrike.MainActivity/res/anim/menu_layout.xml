@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list   android:id="@+id/menu_animation" android:oneshot="false" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/menu_1" android:duration="150" />
+    <item android:drawable="@drawable/menu_2" android:duration="150" />
+    <item android:drawable="@drawable/menu_3" android:duration="150" />
+    <item android:drawable="@drawable/menu_4" android:duration="150" />
+    <item android:drawable="@drawable/menu_5" android:duration="150" />
+    <item android:drawable="@drawable/menu_6" android:duration="150" />
+    <item android:drawable="@drawable/menu_7" android:duration="150" />  
+
+ </animation-list>  

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 
 public class loseWindowActivity extends Activity{
+	
+	private String score = "";
 
 	 @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -15,9 +17,9 @@ public class loseWindowActivity extends Activity{
 	  
 	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	        Intent intent = getIntent();
+	        score = intent.getStringExtra(gameClassicActivity.SCORE_MESSAGE);
 	        setContentView(R.layout.lose_layout);
-	        
-	        
+	        	        
 	        
 	        ImageButton goToMenu = (ImageButton) findViewById(R.id.goToMenuButton);
 	        goToMenu.setOnClickListener(new View.OnClickListener() {

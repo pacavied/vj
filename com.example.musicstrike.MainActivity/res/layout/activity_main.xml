@@ -1,8 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuBackgroundImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundhome" >
+    
+    
+    <ImageView
+	android:id="@+id/myanimation"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@anim/menu_layout"
+	/>
+	
 
     <ImageButton
         android:id="@+id/imagePlayButton"
@@ -11,7 +22,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
-        android:scaleType="fitXY"
         android:src="@drawable/play_button" />
 
     <ImageView
@@ -36,17 +46,15 @@
         android:id="@+id/musicStrike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/footballPlayer"
-        android:layout_alignRight="@+id/imagePlayButton"
-        android:layout_marginBottom="68dp"
         android:src="@drawable/musicstrike" />
 
-    <Button
+    <ImageButton
         android:id="@+id/tutorialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Tutorial" />
+        android:background="@android:color/transparent"
+        android:src="@drawable/tutorial_button" />
     
 </RelativeLayout>
