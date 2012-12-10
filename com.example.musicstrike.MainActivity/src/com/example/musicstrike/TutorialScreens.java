@@ -37,6 +37,7 @@ public class TutorialScreens extends Activity{
 	        bib.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {
+					stopService(getIntent());
 					finish();							
 					Intent intent = new Intent(TutorialScreens.this, InitialCountDownActivity.class);
 					startActivity(intent);
@@ -48,6 +49,7 @@ public class TutorialScreens extends Activity{
 	        tutButton.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {
+					stopService(getIntent());
 					finish();								
 					Intent intent = new Intent(TutorialScreens.this, MainActivity.class);
 					startActivity(intent);

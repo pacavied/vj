@@ -37,12 +37,12 @@ public class MainActivity extends Activity {
         
         //GifMovieView view = new GifMovieView(this, "file:///android_asset/homescreen3.gif");
         //setContentView(view);
-        
+ 
         setContentView(R.layout.activity_main);       
         
-		ImageView footballPlayer = (ImageView) findViewById(R.id.footballPlayer);
-		footballPlayer.setVisibility(View.VISIBLE);
-		footballPlayer.bringToFront();
+//		ImageView footballPlayer = (ImageView) findViewById(R.id.footballPlayer);
+//		footballPlayer.setVisibility(View.VISIBLE);
+//		footballPlayer.bringToFront();
 		//Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		//shake.setRepeatCount(-1);
 		//shake.setRepeatMode(2);
@@ -83,16 +83,16 @@ public class MainActivity extends Activity {
 			handler.postDelayed(this, 200);}
 		}); */
 		
-		/*ImageView myAnimation = (ImageView)findViewById(R.id.myanimation);
+		ImageView myAnimation = (ImageView)findViewById(R.id.animatedStart);
 		final AnimationDrawable myAnimationDrawable = (AnimationDrawable)myAnimation.getDrawable();
-
+		
 		myAnimation.post(
 		new Runnable(){
 
 		  public void run() {
 		   myAnimationDrawable.start();
 		  }
-		});*/
+		});
         
        
         ImageButton bib = (ImageButton) findViewById(R.id.imagePlayButton);
