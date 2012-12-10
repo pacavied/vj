@@ -36,9 +36,6 @@ public class MainActivity extends Activity {
 		//shake.setRepeatMode(2);
 		//footballPlayer.startAnimation(shake);
 		
-		ImageView musicStrike = (ImageView) findViewById(R.id.musicStrike);
-		musicStrike.setVisibility(View.VISIBLE);
-		musicStrike.bringToFront();
 		//shake.setRepeatCount(2);
 		//shake.setRepeatMode(2);
 		//Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate_animation);
