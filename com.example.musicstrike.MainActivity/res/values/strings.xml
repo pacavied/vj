@@ -4,6 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Follow \u0026 Fun</string>
-    <string name="title_activity_game_classic">gameClassicActivity</string>
+    <string name="title_activity_game_classic">Follow \u0026 Fun</string>
 
 </resources>
