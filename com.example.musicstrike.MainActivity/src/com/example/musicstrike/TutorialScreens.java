@@ -3,11 +3,13 @@ package com.example.musicstrike;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class TutorialScreens extends Activity{
 	
@@ -18,6 +20,17 @@ public class TutorialScreens extends Activity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getIntent();
 		setContentView(R.layout.end_tutorial);
+		
+		ImageView myAnimation = (ImageView)findViewById(R.id.myanimation);
+		final AnimationDrawable myAnimationDrawable = (AnimationDrawable)myAnimation.getDrawable();
+
+		myAnimation.post(
+		new Runnable(){
+
+		  public void run() {
+		   myAnimationDrawable.start();
+		  }
+		});
 		
 		
 		 ImageButton bib = (ImageButton) findViewById(R.id.buttonPlay);

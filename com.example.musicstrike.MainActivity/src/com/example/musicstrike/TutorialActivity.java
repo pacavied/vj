@@ -34,6 +34,9 @@ import android.view.animation.RotateAnimation;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -76,6 +79,19 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         getIntent();
 		setContentView(R.layout.tutorial_activity);
 		
+		
+		Button bib = (Button) findViewById(R.id.skipButton);
+        bib.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				EndTutorial(true);							
+				Intent intent = new Intent(TutorialActivity.this, InitialCountDownActivity.class);
+				startActivity(intent);
+				
+			}
+		});
+		
+		
 		player = MediaPlayer.create(this, R.raw.yeeee);
 		player.setVolume(100, 100);		
 		soundPlayer = MediaPlayer.create(this, R.raw.tempo100);
@@ -86,6 +102,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		soundPlayer.setOnErrorListener(this);
 		soundPlayer.setOnPreparedListener(this);
 		soundPlayer.setOnVideoSizeChangedListener(this);
+		soundPlayer.setLooping(true);
+		soundPlayer.start();
 		
         gestureScanner = new GestureDetector(this);
     	
@@ -96,7 +114,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	    mAccelLast = SensorManager.GRAVITY_EARTH;
 	    pitch = 0;    
 
-		behavior = new Behavior(0); // TAP
+		behavior = new Behavior(0, true); // TAP
 		
 		// "While" principal
 		final Handler handler = new Handler();
@@ -116,7 +134,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				RelativeLayout rl = (RelativeLayout) findViewById(R.id.tutorial);
 				rl.setBackgroundResource(behavior.backgroundImage);	
 				
-				if (!stopRunnable)
+				/*if (!stopRunnable)
 				{
 					soundPlayer.release();
 					soundPlayer = MediaPlayer.create(TutorialActivity.this, R.raw.tempo100);
@@ -125,7 +143,8 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 					soundPlayer.setOnPreparedListener(TutorialActivity.this);
 					soundPlayer.setOnVideoSizeChangedListener(TutorialActivity.this);
 					soundPlayer.start();
-				}
+				}*/
+					
 				
 				
 				if(objectView != null)
@@ -160,15 +179,12 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 						Log.v("NoTAP", "Ntaped: X");
 					} else {
 						tap = true;
-						TextView tv = (TextView) findViewById(R.id.textView1);
-						
-						tv.setTextColor(Color.RED);
-						tv.setTextSize(80);
-						tv.setGravity(Gravity.CENTER);
-						tv.setText("Tap now!");					
-						
-						animateTextView(tv); 
-						
+
+						ImageView iv = (ImageView) findViewById(R.id.instructionView);
+						iv.setBackgroundResource(R.drawable.tapit);
+						iv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(TutorialActivity.this, R.anim.rotate_animation);
+						iv.startAnimation(rotate);			
 						
 						
 						Log.v("TAP", "Tap Now");
@@ -180,12 +196,12 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				else if (behavior.behaviorType == 1){
 					
 						scroll = true;
-						TextView tv = (TextView) findViewById(R.id.textView1);
-						tv.setTextColor(Color.RED);
-						tv.setTextSize(80);
-						tv.setGravity(Gravity.CENTER);
-						tv.setText("Scroll now!");				
-						animateTextView(tv); 
+
+						ImageView iv = (ImageView) findViewById(R.id.instructionView);
+						iv.setBackgroundResource(R.drawable.scrollnow);
+						iv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(TutorialActivity.this, R.anim.rotate_animation);
+						iv.startAnimation(rotate);	
 						
 						Log.v("SCROLL", "Scroll Now");
 							
@@ -195,12 +211,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				else if (behavior.behaviorType == 2){
 					
 						shake = true;
-						TextView tv = (TextView) findViewById(R.id.textView1);
-						tv.setTextColor(Color.RED);
-						tv.setTextSize(80);
-						tv.setGravity(Gravity.CENTER);
-						tv.setText("Shake now!");				
-						animateTextView(tv); 
+						ImageView iv = (ImageView) findViewById(R.id.instructionView);
+						iv.setBackgroundResource(R.drawable.shakeit);
+						iv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(TutorialActivity.this, R.anim.rotate_animation);
+						iv.startAnimation(rotate);	 
 						
 						Log.v("SHAKE", "Shake Now");	
 						
@@ -210,12 +225,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				else if (behavior.behaviorType == 3){
 					
 						moveLeft = true;
-						TextView tv = (TextView) findViewById(R.id.textView1);
-						tv.setTextColor(Color.RED);
-						tv.setGravity(Gravity.CENTER);
-						tv.setTextSize(80);
-						tv.setText("Left now!");				
-						animateTextView(tv); 
+						ImageView iv = (ImageView) findViewById(R.id.instructionView);
+						iv.setBackgroundResource(R.drawable.moveleft);
+						iv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(TutorialActivity.this, R.anim.rotate_animation);
+						iv.startAnimation(rotate);	 
 						
 						Log.v("LEFT", "Left Now");	
 						
@@ -225,12 +239,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				else if (behavior.behaviorType == 4){
 					
 						moveRight = true;
-						TextView tv = (TextView) findViewById(R.id.textView1);
-						tv.setTextColor(Color.RED);
-						tv.setTextSize(80);
-						tv.setGravity(Gravity.CENTER);
-						tv.setText("Right now!");				
-						animateTextView(tv); 
+						ImageView iv = (ImageView) findViewById(R.id.instructionView);
+						iv.setBackgroundResource(R.drawable.moveright);
+						iv.setVisibility(View.VISIBLE);
+						Animation rotate = AnimationUtils.loadAnimation(TutorialActivity.this, R.anim.rotate_animation);
+						iv.startAnimation(rotate);	
 						
 						Log.v("RIGHT", "Right Now");
 							
@@ -277,8 +290,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			//SHAKE:
 			if (mAccel > 5 && shake)
 			{
-				TextView tv = (TextView) findViewById(R.id.textView1);
-				tv.setText("Shaked!");
 				if(!alreadyWin){
 				updateSpritesAndBackgrounds();
 				}
@@ -287,7 +298,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 				shake = false;
 				moveLeft = true;
-				behavior = new Behavior(1); // LEFT
+				behavior = new Behavior(1, true); // LEFT
 				
 			}
 			
@@ -303,10 +314,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 				Log.v("Right","Right");
 				if(!alreadyWin){
 					updateSpritesAndBackgrounds();
+					EndTutorial(false);
 					}
 				alreadyWin = true;
 				
-				EndTutorial();
+				
 				
 			}
 			else if (pitch < -3 && (!shake && !moveRight) ) // Left y Right se confunden con shake a veces. 
@@ -325,7 +337,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 
 				moveLeft = false;
 				moveRight = true;
-				behavior = new Behavior(6); // RIGHT
+				behavior = new Behavior(6, true); // RIGHT
 			}	
 
 			else if (pitch > 3 && (!shake && !moveLeft) ) // Left y Right se confunden con shake a veces. 
@@ -349,7 +361,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			alreadyWin = true;
 			tap = false;
 			scroll = true;
-			behavior = new Behavior(3); // SCROLL
+			behavior = new Behavior(3, true); // SCROLL
 			
 		} 
 		else 
@@ -369,7 +381,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 			alreadyWin = true;
 			scroll = false;
 			shake = true;
-			behavior = new Behavior(2); // SHAKE
+			behavior = new Behavior(2, true); // SHAKE
 			//scroll = false;
 		}
 		else
@@ -459,7 +471,7 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
     return super.onKeyDown(keyCode, event);
     }
     
-    public void EndTutorial()
+    public void EndTutorial(boolean skiped)
     {
 		SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
 		Editor editor = prefs.edit();
@@ -470,8 +482,11 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
         soundPlayer.release();
         stopService(getIntent());
         finish();
-        Intent intent = new Intent(TutorialActivity.this, TutorialScreens.class);
-        startActivity(intent);
+        if (!skiped)
+        {
+	        Intent intent = new Intent(TutorialActivity.this, TutorialScreens.class);
+	        startActivity(intent);
+        }
     }
 
 

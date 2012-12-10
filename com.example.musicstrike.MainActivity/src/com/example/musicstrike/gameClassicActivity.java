@@ -185,7 +185,7 @@ public class gameClassicActivity extends Activity implements OnGestureListener,
 				tapCounter = 0;
 
 				if (roundsCounter == 0)
-					behavior = new Behavior(0);
+					behavior = new Behavior(0, false);
 				else
 					behavior = new Behavior();
 
