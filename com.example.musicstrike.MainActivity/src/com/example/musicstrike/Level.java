@@ -1,5 +1,7 @@
 package com.example.musicstrike;
 
+import com.example.musicstrike.R;
+
 public class Level {
 	
 	public int levelMax;
