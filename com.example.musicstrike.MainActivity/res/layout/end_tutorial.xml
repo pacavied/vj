@@ -4,23 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/goToMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:src="@drawable/menu_button" />
+    <ImageView
+        android:id="@+id/myanimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@anim/endtutorial_layout" />
 
-        <ImageButton
-            android:id="@+id/buttonPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/goToMenuButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="49dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/play_button" />
+    <ImageButton
+        android:id="@+id/goToMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="390dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/tutorial_menu_button" />
+
+    <ImageButton
+        android:id="@+id/buttonPlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/tutorial_play_button" />
 
 </RelativeLayout>

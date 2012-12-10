@@ -54,15 +54,24 @@ public class Behavior {
 	}
 	
 	//Utilizado para el tutorial
-	public Behavior(int type){
+	public Behavior(int type, boolean isTutorial){
 		
 		behaviorType = findBehaviorType(type);
-		backgroundImage = findBackgroundImage(type);
+		if (isTutorial)
+		{
+			backgroundImage = findTutorialBackgroundImage(type);
+			finalBackground = findTutorialFinalBackground(type);
+		}
+		else
+		{
+			backgroundImage = findBackgroundImage(type);
+			finalBackground = findTutorialFinalBackground(type);
+		}
+		
 		objectInitialSprite = findObjectInitialSprite(type);
 		objectFinalSprite = findObjectFinalSprite(type);
 		initialSound = findObjectInitialSound(type);
 		finalSound = findObjectFinalSound(type);
-		finalBackground = findFinalBackground(type);
 		instructionSound = findInstructionSound(type);
 		
 	}
@@ -365,4 +374,53 @@ public class Behavior {
 		int rnd = r.nextInt(randomLimit);
 		return rnd;
 	}
+	
+	
+	//TUTORIAL
+public int findTutorialBackgroundImage(int t){
+		
+		if(t == 0)			
+			return R.drawable.tutorial_spiderbackground1;
+		else if (t == 1)
+			return R.drawable.tutorial_left1;
+		else if (t == 2)
+			return R.drawable.tutorial_bell1;
+		else if(t == 3)
+			return R.drawable.tutorial_scroll1;
+		else if (t == 6)
+			return R.drawable.tutorial_right1;		
+		else
+			return 0;
+		
+	}
+
+public int findTutorialFinalBackground(int t){
+	if(t == 0)
+	{
+		haveFinalBackground = true;
+		return R.drawable.tutorial_spiderbackground2;
+	}
+	else if(t == 1)
+	{
+		haveFinalBackground = true;
+		return R.drawable.tutorial_left2;
+	}
+	else if(t == 2)
+	{
+		haveFinalBackground = true;
+		return R.drawable.tutorial_bell2;
+	}
+	else if(t == 3)
+	{
+		haveFinalBackground = true;
+		return R.drawable.tutorial_scroll2;
+	}
+	else if(t == 6)
+	{
+		haveFinalBackground = true;
+		return R.drawable.tutorial_right2;
+	}
+	else
+		return 0;
+}
 }
