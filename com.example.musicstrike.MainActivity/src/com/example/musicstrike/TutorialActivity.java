@@ -6,13 +6,11 @@ import com.example.musicstrike.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -27,19 +25,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,7 +52,6 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 	private boolean alreadyWin = false;
 	private int objectID = -1;
 	private boolean stopRunnable = false;
-	private boolean wrongMovement = false;
 	private int roundsCounter = 0;
 	/* Orden Tutorial:
 	 * TAP
@@ -392,26 +383,26 @@ OnCompletionListener, OnErrorListener, OnVideoSizeChangedListener {
 		return true;
 	}
 	
-	private void animateTextView(TextView tv)
-	{
-		tv.bringToFront();
-		AnimationSet set = new AnimationSet(true);
-		set.setFillAfter(true);
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-	    animation.setDuration(500);
-	    set.addAnimation(animation);
-
-	    RotateAnimation ranim = (RotateAnimation)AnimationUtils.loadAnimation(this,R.anim.rotate_animation);
-	    ranim.setFillAfter(true);
-	    set.addAnimation(ranim);    
-	    
-	    animation = new AlphaAnimation(1.0f, 0.0f);
-	    animation.setDuration(500);
-	    animation.setStartOffset(500);
-	    set.addAnimation(animation);
-	    
-	    tv.startAnimation(set);
-	}
+//	private void animateTextView(TextView tv)
+//	{
+//		tv.bringToFront();
+//		AnimationSet set = new AnimationSet(true);
+//		set.setFillAfter(true);
+//		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+//	    animation.setDuration(500);
+//	    set.addAnimation(animation);
+//
+//	    RotateAnimation ranim = (RotateAnimation)AnimationUtils.loadAnimation(this,R.anim.rotate_animation);
+//	    ranim.setFillAfter(true);
+//	    set.addAnimation(ranim);    
+//	    
+//	    animation = new AlphaAnimation(1.0f, 0.0f);
+//	    animation.setDuration(500);
+//	    animation.setStartOffset(500);
+//	    set.addAnimation(animation);
+//	    
+//	    tv.startAnimation(set);
+//	}
 	
 	public void updateSpritesAndBackgrounds(){
         

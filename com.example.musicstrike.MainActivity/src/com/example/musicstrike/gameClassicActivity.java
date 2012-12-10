@@ -1,16 +1,6 @@
 package com.example.musicstrike;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.channels.AlreadyConnectedException;
-import java.util.Timer;
 
 import com.example.musicstrike.R;
 
@@ -21,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -33,30 +22,19 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -83,7 +61,6 @@ public class gameClassicActivity extends Activity implements OnGestureListener,
 	private float mAccelLast; // last acceleration including gravity
 	private boolean monitorBool, continueRunnable = true;
 	private int currentScore = 0;
-	private int highscore = 0;
 	private int objectID = -1;
 	private ImageView objectView = null;
 	private Behavior behavior;
@@ -656,67 +633,29 @@ public class gameClassicActivity extends Activity implements OnGestureListener,
 		}
 	}
 
-	private void animateTextView(TextView tv) {
-		tv.bringToFront();
-		AnimationSet set = new AnimationSet(true);
-		set.setFillAfter(true);
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		set.addAnimation(animation);
-
-		RotateAnimation ranim = (RotateAnimation) AnimationUtils.loadAnimation(
-				this, R.anim.rotate_animation);
-		ranim.setFillAfter(true);
-		set.addAnimation(ranim);
-
-		animation = new AlphaAnimation(1.0f, 0.0f);
-		animation.setDuration(500);
-		animation.setStartOffset(500);
-		set.addAnimation(animation);
-
-		tv.startAnimation(set);
-	}
+//	private void animateTextView(TextView tv) {
+//		tv.bringToFront();
+//		AnimationSet set = new AnimationSet(true);
+//		set.setFillAfter(true);
+//		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+//		animation.setDuration(500);
+//		set.addAnimation(animation);
+//
+//		RotateAnimation ranim = (RotateAnimation) AnimationUtils.loadAnimation(
+//				this, R.anim.rotate_animation);
+//		ranim.setFillAfter(true);
+//		set.addAnimation(ranim);
+//
+//		animation = new AlphaAnimation(1.0f, 0.0f);
+//		animation.setDuration(500);
+//		animation.setStartOffset(500);
+//		set.addAnimation(animation);
+//
+//		tv.startAnimation(set);
+//	}
 
 	
-	// ANIMACION?
-	private void animateIntro(TextView tv) {
-		AnimationSet set = new AnimationSet(true);
-		set.setFillAfter(true);
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		set.addAnimation(animation);
 
-		tv.setText("3");
-		animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		animation.setStartOffset(500);
-		set.addAnimation(animation);
-
-		tv.setText("2");
-		animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		animation.setStartOffset(500);
-		set.addAnimation(animation);
-
-		tv.setText("1");
-		animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		animation.setStartOffset(500);
-		set.addAnimation(animation);
-
-		/*
-		 * RotateAnimation ranim =
-		 * (RotateAnimation)AnimationUtils.loadAnimation(
-		 * this,R.anim.rotate_animation); ranim.setFillAfter(true);
-		 * set.addAnimation(ranim);
-		 * 
-		 * animation = new AlphaAnimation(1.0f, 0.0f);
-		 * animation.setDuration(500); animation.setStartOffset(500);
-		 * set.addAnimation(animation);
-		 */
-
-		tv.startAnimation(set);
-	}
 
 	private int getHighScore() throws IOException {
 
