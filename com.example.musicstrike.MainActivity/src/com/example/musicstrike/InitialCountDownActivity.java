@@ -99,7 +99,6 @@ public class InitialCountDownActivity extends Activity implements OnCompletionLi
 						Intent intent = new Intent(InitialCountDownActivity.this,gameClassicActivity.class);
 						startActivity(intent);
 					}
-						
 					
 				}	
 		
