@@ -2,6 +2,8 @@ package com.example.musicstrike;
 
 import java.util.Random;
 
+import com.example.musicstrike.R;
+
 public class Behavior {
 
 	public int behaviorType;

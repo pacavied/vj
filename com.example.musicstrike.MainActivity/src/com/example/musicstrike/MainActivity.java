@@ -1,5 +1,7 @@
 package com.example.musicstrike;
 
+import com.example.musicstrike.R;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -108,6 +110,7 @@ public class MainActivity extends Activity {
 					overridePendingTransition(R.anim.fadeout, R.anim.fadein);
 					intent = new Intent(MainActivity.this,InitialCountDownActivity.class);
 				}
+				//myAnimationDrawable.stop();
 				startActivity(intent);
 				
 			}
@@ -119,10 +122,13 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 							
 				Intent intent = new Intent(MainActivity.this,TutorialActivity.class);
+				//myAnimationDrawable.stop();
 				startActivity(intent);
 				
 			}
 		});
+        
+        
         
         
       
@@ -146,5 +152,7 @@ public class MainActivity extends Activity {
 		
 		return false;
 	}
+    
+   
     
 }

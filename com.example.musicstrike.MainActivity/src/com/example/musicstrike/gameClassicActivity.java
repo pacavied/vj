@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import java.nio.channels.AlreadyConnectedException;
 import java.util.Timer;
 
+import com.example.musicstrike.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
