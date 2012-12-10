@@ -1,20 +1,14 @@
 package com.example.musicstrike;
 
-import java.io.InputStream;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Movie;
-import android.os.SystemClock;
-import android.view.View;
 import android.webkit.WebView;
 
 public class GifMovieView extends WebView{
-	
-	private Movie mMovie;
-	private InputStream mStream;
-	private long mMoviestart;
+//	
+//	private Movie mMovie;
+//	private InputStream mStream;
+//	private long mMoviestart;
 
     public GifMovieView(Context context, String path) {
         super(context);

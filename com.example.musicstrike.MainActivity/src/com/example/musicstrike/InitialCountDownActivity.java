@@ -16,11 +16,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 public class InitialCountDownActivity extends Activity implements OnCompletionListener, OnErrorListener, OnPreparedListener, OnVideoSizeChangedListener{
@@ -116,47 +113,23 @@ public class InitialCountDownActivity extends Activity implements OnCompletionLi
         }
     return super.onKeyDown(keyCode, event);
 }
-	
-	private void animateTextView(TextView tv)
-	{
-		tv.bringToFront();
-		AnimationSet set = new AnimationSet(true);
-		set.setFillAfter(true);
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-	    animation.setDuration(500);
-	    set.addAnimation(animation);
 
-	    RotateAnimation ranim = (RotateAnimation)AnimationUtils.loadAnimation(this,R.anim.rotate_animation);
-	    ranim.setFillAfter(true);
-	    set.addAnimation(ranim);    
-	    
-	    animation = new AlphaAnimation(1.0f, 0.0f);
-	    animation.setDuration(500);
-	    animation.setStartOffset(500);
-	    set.addAnimation(animation);
-	    
-	    tv.startAnimation(set);
-	}
 
-	@Override
 	public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public boolean onError(MediaPlayer mp, int what, int extra) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void onCompletion(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		

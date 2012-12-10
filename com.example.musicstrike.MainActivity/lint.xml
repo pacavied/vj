@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="FloatMath">
+        <ignore path="src\com\example\musicstrike\TutorialActivity.java" />
+        <ignore path="src\com\example\musicstrike\gameClassicActivity.java" />
+    </issue>
+</lint>
